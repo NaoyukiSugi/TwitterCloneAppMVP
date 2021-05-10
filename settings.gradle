@@ -1,2 +1,3 @@
+include ':common_api'
 include ':app'
 rootProject.name = "TwitterCloneAppMVP"
