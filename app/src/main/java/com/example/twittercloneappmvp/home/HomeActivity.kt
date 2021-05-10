@@ -1,11 +1,12 @@
-package com.example.twittercloneappmvp
+package com.example.twittercloneappmvp.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.twittercloneappmvp.R
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
     }
 }
