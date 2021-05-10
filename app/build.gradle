@@ -99,4 +99,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    implementation(project(":common_api"))
 }
