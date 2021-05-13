@@ -96,6 +96,9 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     implementation(project(":common_api"))
 }
