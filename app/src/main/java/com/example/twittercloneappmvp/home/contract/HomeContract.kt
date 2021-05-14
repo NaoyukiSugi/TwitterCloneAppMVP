@@ -18,6 +18,8 @@ interface HomeContract {
         fun hideErrorView()
         fun showEmptyView()
         fun hideEmptyView()
+        fun showLoadingView()
+        fun hideLoadingView()
         fun setOnIconClickListener(listener: IconClickListener)
         fun setOnRefreshListener(listener: RefreshListener)
     }
