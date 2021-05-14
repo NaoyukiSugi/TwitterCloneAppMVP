@@ -12,8 +12,8 @@ import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.home.contract.HomeContract
 
 class HomeViewHolder(
-    view: View,
-    private val viewProxy: HomeContract.ViewHolderViewProxy
+    private val view: View,
+    private val viewProxy: HomeContract.ViewHolderViewProxy = ViewHolderViewProxy(view)
 ) : RecyclerView.ViewHolder(view) {
 
     fun bind(tweet: Tweet, listener: HomeContract.IconClickListener?) {
