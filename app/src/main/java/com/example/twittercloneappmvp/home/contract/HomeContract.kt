@@ -13,7 +13,7 @@ interface HomeContract {
         fun loadImageToView(imageUrl: String)
         fun setName(name: String)
         fun setScreenName(screenName: String)
-        fun setDescription(description: String)
+        fun setText(text: String)
         fun setOnClickListener(user: User, listener: IconClickListener?)
     }
 

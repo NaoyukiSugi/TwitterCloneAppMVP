@@ -10,7 +10,7 @@
     <color name="tweet_background">#FF000000</color>
     <color name="tweet_user_name">#FFFFFFFF</color>
     <color name="tweet_user_screen_name">#FF626B71</color>
-    <color name="tweet_description">#FFFFFFFF</color>
+    <color name="tweet_text">#FFFFFFFF</color>
     <color name="profile_background">#FF000000</color>
     <color name="profile_user_name">#FFFFFFFF</color>
     <color name="profile_user_screen_name">#FF626B71</color>

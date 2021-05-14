@@ -21,7 +21,8 @@ class HomeViewHolder(
             loadImageToView(tweet.user.profileImageUrlHttps)
             setName(tweet.user.name)
             setScreenName(tweet.user.screenName)
-            setDescription(tweet.text)
+            setText(tweet.text)
+            setOnClickListener(tweet.user, listener)
         }
     }
 
@@ -39,8 +40,8 @@ class HomeViewHolder(
         private val screenNameTv: TextView
             get() = view.findViewById(R.id.home_user_screen_name)
 
-        private val descriptionTv: TextView
-            get() = view.findViewById(R.id.home_user_description)
+        private val textTv: TextView
+            get() = view.findViewById(R.id.home_tweet_text)
 
         override fun loadImageToView(imageUrl: String) {
             requestManager.load(imageUrl).into(iconIv)
@@ -54,8 +55,8 @@ class HomeViewHolder(
             screenNameTv.text = screenName
         }
 
-        override fun setDescription(description: String) {
-            descriptionTv.text = description
+        override fun setText(text: String) {
+            textTv.text = text
         }
 
         override fun setOnClickListener(user: User, listener: HomeContract.IconClickListener?) {
