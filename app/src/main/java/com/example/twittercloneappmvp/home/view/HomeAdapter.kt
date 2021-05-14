@@ -13,20 +13,21 @@ class HomeAdapter : ListAdapter<Tweet, HomeViewHolder>(DIFF_CALLBACK) {
 
     var listener: HomeContract.IconClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        TODO("Not yet implemented")
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createHomeViewHolder(parent)
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        getTweet(position)?.run { holder.bind(this, listener) }
     }
 
     @VisibleForTesting
     internal fun createHomeViewHolder(parent: ViewGroup): HomeViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_tweet, parent, false)
-        return HomeViewHolder(view, listener)
+        return HomeViewHolder(view)
     }
+
+    @VisibleForTesting
+    internal fun getTweet(position: Int) = getItem(position)
 
     companion object {
         @VisibleForTesting
