@@ -20,13 +20,13 @@ class HomeViewHolderViewProxyTest {
     private val iconIv: ImageView = mock()
     private val nameTv: TextView = mock()
     private val screenNameTv: TextView = mock()
-    private val descriptionTv: TextView = mock()
+    private val textTv: TextView = mock()
 
     private val view: View = mock {
         on { findViewById<ImageView>(R.id.home_user_icon) } doReturn iconIv
         on { findViewById<TextView>(R.id.home_user_name) } doReturn nameTv
         on { findViewById<TextView>(R.id.home_user_screen_name) } doReturn screenNameTv
-        on { findViewById<TextView>(R.id.home_user_description) } doReturn descriptionTv
+        on { findViewById<TextView>(R.id.home_tweet_text) } doReturn textTv
     }
 
     @BeforeEach
@@ -64,12 +64,12 @@ class HomeViewHolderViewProxyTest {
     }
 
     @Test
-    fun `setDescription should set description into descriptionTv`() {
-        val description = "description"
+    fun `setText should set text into textTv`() {
+        val text = "text"
 
-        viewProxy.setDescription(description)
+        viewProxy.setText(text)
 
-        verify(descriptionTv).text = description
+        verify(textTv).text = text
     }
 
     @Test
