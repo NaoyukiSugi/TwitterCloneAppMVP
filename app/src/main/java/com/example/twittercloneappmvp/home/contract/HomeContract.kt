@@ -39,4 +39,8 @@ interface HomeContract {
     interface IconClickListener {
         fun onIconClick(user: User)
     }
+
+    interface Presenter {
+        fun getHomeTimeline()
+    }
 }
