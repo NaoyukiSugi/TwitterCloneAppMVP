@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TwitterCloneAppMVP</string>
+    <string name="view_home_empty_message">Tweetはありません</string>
+    <string name="view_home_error_message">データを取得できませんでした</string>
+    <string name="view_home_error_refresh_button">更新する</string>
 </resources>

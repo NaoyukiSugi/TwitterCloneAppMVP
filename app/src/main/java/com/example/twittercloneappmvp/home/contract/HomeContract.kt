@@ -9,6 +9,23 @@ interface HomeContract {
         suspend fun getHomeTimeline(): Result<List<Tweet>>
     }
 
+    interface ViewProxy {
+        fun initAdapter()
+        fun submitList(tweets: List<Tweet>)
+        fun showRecyclerView()
+        fun hideRecyclerView()
+        fun showErrorView()
+        fun hideErrorView()
+        fun showEmptyView()
+        fun hideEmptyView()
+        fun setOnIconClickListener(listener: IconClickListener)
+        fun setOnRefreshListener(listener: RefreshListener)
+    }
+
+    interface RefreshListener {
+        fun onRefresh()
+    }
+
     interface ViewHolderViewProxy {
         fun loadImageToView(imageUrl: String)
         fun setName(name: String)
