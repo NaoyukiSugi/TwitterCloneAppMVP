@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
@@ -21,11 +22,13 @@ internal class HomeViewProxyTest {
     private val recyclerView: RecyclerView = mock()
     private val errorView: View = mock()
     private val emptyView: View = mock()
+    private val progressBar: ContentLoadingProgressBar = mock()
     private val refreshButton: Button = mock()
     private val activity: AppCompatActivity = mock {
         on { findViewById<RecyclerView>(R.id.recycler_view) } doReturn recyclerView
         on { findViewById<View>(R.id.error_view) } doReturn errorView
         on { findViewById<View>(R.id.empty_view) } doReturn emptyView
+        on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
     }
     private val adapter: HomeAdapter = mock()
@@ -91,6 +94,20 @@ internal class HomeViewProxyTest {
         viewProxy.hideEmptyView()
 
         verify(emptyView).isVisible = false
+    }
+
+    @Test
+    fun `showLoadingView should show progressBar`() {
+        viewProxy.showLoadingView()
+
+        verify(progressBar).isVisible = true
+    }
+
+    @Test
+    fun `hideLoadingView should hide progressBar`() {
+        viewProxy.hideLoadingView()
+
+        verify(progressBar).isVisible = false
     }
 
     @Test

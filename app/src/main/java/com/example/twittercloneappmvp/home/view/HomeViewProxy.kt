@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
@@ -25,6 +26,9 @@ class HomeViewProxy(
 
     private val refreshButton: Button
         get() = activity.findViewById(R.id.refresh_button)
+
+    private val progressBar: ContentLoadingProgressBar
+        get() = activity.findViewById(R.id.progress_bar)
 
     override fun initAdapter() {
         recyclerView.adapter = homeAdapter
@@ -56,6 +60,14 @@ class HomeViewProxy(
 
     override fun hideEmptyView() {
         emptyView.isVisible = false
+    }
+
+    override fun showLoadingView() {
+        progressBar.isVisible = true
+    }
+
+    override fun hideLoadingView() {
+        progressBar.isVisible = false
     }
 
     override fun setOnIconClickListener(listener: HomeContract.IconClickListener) {
