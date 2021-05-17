@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class HomePresenter(
     private val viewProxy: HomeContract.ViewProxy,
     private val repository: HomeContract.Repository,
-    private val lifecycleOwner: LifecycleOwner
+    lifecycleOwner: LifecycleOwner
 ) : HomeContract.Presenter,
     HomeContract.IconClickListener,
     HomeContract.RefreshListener,
@@ -26,7 +26,7 @@ class HomePresenter(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    internal fun onLifecycleEventOnCreate() {
+    fun onLifecycleEventOnCreate() {
         viewProxy.run {
             initAdapter()
             setOnIconClickListener(this@HomePresenter)
@@ -36,16 +36,15 @@ class HomePresenter(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    internal fun onLifecycleEventOnDestroy() = cancel()
+    fun onLifecycleEventOnDestroy() = cancel()
 
     override fun getHomeTimeline() {
         launch {
             viewProxy.showLoadingView()
             when (val result = repository.getHomeTimeline()) {
                 is Result.Success -> {
-                    if (result.data != null) {
+                    if (result.data != null && result.data.isNotEmpty()) {
                         viewProxy.run {
-                            hideLoadingView()
                             hideErrorView()
                             hideEmptyView()
                             showRecyclerView()
@@ -53,7 +52,6 @@ class HomePresenter(
                         }
                     } else {
                         viewProxy.run {
-                            hideLoadingView()
                             hideRecyclerView()
                             hideErrorView()
                             showEmptyView()
@@ -62,13 +60,13 @@ class HomePresenter(
                 }
                 is Result.Error -> {
                     viewProxy.run {
-                        hideLoadingView()
                         hideRecyclerView()
                         hideEmptyView()
                         showErrorView()
                     }
                 }
             }
+            viewProxy.hideLoadingView()
         }
     }
 
