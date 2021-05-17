@@ -40,36 +40,32 @@ class HomePresenter(
 
     override fun getHomeTimeline() {
         launch {
+            viewProxy.showLoadingView()
             when (val result = repository.getHomeTimeline()) {
                 is Result.Success -> {
                     if (result.data != null) {
                         viewProxy.run {
-                            showRecyclerView()
+                            hideLoadingView()
                             hideErrorView()
                             hideEmptyView()
-                            hideLoadingView()
+                            showRecyclerView()
                             submitList(result.data)
                         }
                     } else {
                         viewProxy.run {
-                            showEmptyView()
+                            hideLoadingView()
                             hideRecyclerView()
                             hideErrorView()
-                            hideLoadingView()
+                            showEmptyView()
                         }
                     }
                 }
                 is Result.Error -> {
                     viewProxy.run {
-                        showErrorView()
+                        hideLoadingView()
                         hideRecyclerView()
                         hideEmptyView()
-                        hideLoadingView()
-                    }
-                }
-                is Result.Loading -> {
-                    viewProxy.run {
-                        showLoadingView()
+                        showErrorView()
                     }
                 }
             }
