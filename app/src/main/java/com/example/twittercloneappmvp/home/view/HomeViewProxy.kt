@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.home.contract.HomeContract
+import javax.inject.Inject
 
-class HomeViewProxy(
+class HomeViewProxy @Inject constructor(
     private val activity: AppCompatActivity
 ) : HomeContract.ViewProxy {
 

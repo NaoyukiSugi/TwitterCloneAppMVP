@@ -4,8 +4,11 @@ import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.util.Result
+import javax.inject.Inject
 
-class HomeRepository(private val api: HomeTimelineApi) : HomeContract.Repository {
+class HomeRepository @Inject constructor(
+    private val api: HomeTimelineApi
+) : HomeContract.Repository {
 
     override suspend fun getHomeTimeline(): Result<List<Tweet>> {
         val response = api.getHomeTimeline()

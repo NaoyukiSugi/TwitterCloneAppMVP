@@ -11,8 +11,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomePresenter(
+class HomePresenter @Inject constructor(
     private val viewProxy: HomeContract.ViewProxy,
     private val repository: HomeContract.Repository,
     lifecycleOwner: LifecycleOwner
