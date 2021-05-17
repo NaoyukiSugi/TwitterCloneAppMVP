@@ -13,15 +13,18 @@ import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Named
 
 @Module
 @InstallIn(FragmentComponent::class)
 interface HomeModule {
 
     @Binds
-    fun bindFragment(fragment: Fragment): HomeFragment
+    @Named("Fragment")
+    fun bindFragment(fragment: HomeFragment): Fragment
 
     @Binds
+    @Named("LifecycleOwner")
     fun bindLifecycleOwner(fragment: HomeFragment): LifecycleOwner
 
     @Binds

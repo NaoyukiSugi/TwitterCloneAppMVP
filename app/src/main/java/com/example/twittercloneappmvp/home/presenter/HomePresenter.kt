@@ -12,11 +12,12 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 class HomePresenter @Inject constructor(
     private val viewProxy: HomeContract.ViewProxy,
     private val repository: HomeContract.Repository,
-    lifecycleOwner: LifecycleOwner
+    @Named("LifecycleOwner") lifecycleOwner: LifecycleOwner
 ) : HomeContract.Presenter,
     HomeContract.IconClickListener,
     HomeContract.RefreshListener,
