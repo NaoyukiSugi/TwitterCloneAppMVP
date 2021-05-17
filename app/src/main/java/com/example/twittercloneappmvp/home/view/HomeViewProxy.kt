@@ -3,9 +3,9 @@ package com.example.twittercloneappmvp.home.view
 import android.view.View
 import android.widget.Button
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
@@ -13,31 +13,31 @@ import com.example.twittercloneappmvp.home.contract.HomeContract
 import javax.inject.Inject
 
 class HomeViewProxy @Inject constructor(
-    private val activity: AppCompatActivity
+    private val fragment: Fragment
 ) : HomeContract.ViewProxy {
 
     @VisibleForTesting
     internal lateinit var homeAdapter: HomeAdapter
 
-    private val recyclerView: RecyclerView
-        get() = activity.findViewById(R.id.recycler_view)
+    private val recyclerView: RecyclerView?
+        get() = fragment.view?.findViewById(R.id.recycler_view)
 
-    private val errorView: View
-        get() = activity.findViewById(R.id.error_view)
+    private val errorView: View?
+        get() = fragment.view?.findViewById(R.id.error_view)
 
-    private val emptyView: View
-        get() = activity.findViewById(R.id.empty_view)
+    private val emptyView: View?
+        get() = fragment.view?.findViewById(R.id.empty_view)
 
-    private val refreshButton: Button
-        get() = activity.findViewById(R.id.refresh_button)
+    private val refreshButton: Button?
+        get() = fragment.view?.findViewById(R.id.refresh_button)
 
-    private val progressBar: ContentLoadingProgressBar
-        get() = activity.findViewById(R.id.progress_bar)
+    private val progressBar: ContentLoadingProgressBar?
+        get() = fragment.view?.findViewById(R.id.progress_bar)
 
     override fun initAdapter() {
         createHomeAdapter().run {
             homeAdapter = this
-            recyclerView.adapter = this
+            recyclerView?.adapter = this
         }
     }
 
@@ -46,35 +46,35 @@ class HomeViewProxy @Inject constructor(
     }
 
     override fun showRecyclerView() {
-        recyclerView.isVisible = true
+        recyclerView?.isVisible = true
     }
 
     override fun hideRecyclerView() {
-        recyclerView.isVisible = false
+        recyclerView?.isVisible = false
     }
 
     override fun showErrorView() {
-        errorView.isVisible = true
+        errorView?.isVisible = true
     }
 
     override fun hideErrorView() {
-        errorView.isVisible = false
+        errorView?.isVisible = false
     }
 
     override fun showEmptyView() {
-        emptyView.isVisible = true
+        emptyView?.isVisible = true
     }
 
     override fun hideEmptyView() {
-        emptyView.isVisible = false
+        emptyView?.isVisible = false
     }
 
     override fun showLoadingView() {
-        progressBar.isVisible = true
+        progressBar?.isVisible = true
     }
 
     override fun hideLoadingView() {
-        progressBar.isVisible = false
+        progressBar?.isVisible = false
     }
 
     override fun setOnIconClickListener(listener: HomeContract.IconClickListener) {
@@ -82,7 +82,7 @@ class HomeViewProxy @Inject constructor(
     }
 
     override fun setOnRefreshListener(listener: HomeContract.RefreshListener) {
-        refreshButton.setOnClickListener { listener.onRefresh() }
+        refreshButton?.setOnClickListener { listener.onRefresh() }
     }
 
     @VisibleForTesting
