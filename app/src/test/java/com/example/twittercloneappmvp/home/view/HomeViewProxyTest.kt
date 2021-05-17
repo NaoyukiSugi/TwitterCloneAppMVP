@@ -11,10 +11,7 @@ import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.argumentCaptor
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.*
 
 internal class HomeViewProxyTest {
 
@@ -35,7 +32,8 @@ internal class HomeViewProxyTest {
 
     @BeforeEach
     fun setUp() {
-        viewProxy = HomeViewProxy(activity, adapter)
+        viewProxy = spy(HomeViewProxy(activity))
+        doReturn(adapter).whenever(viewProxy).createHomeAdapter()
     }
 
     @Test
@@ -48,6 +46,7 @@ internal class HomeViewProxyTest {
     @Test
     fun `submitList should call submitList of adapter`() {
         val tweets: List<Tweet> = mock()
+        viewProxy.homeAdapter = adapter
 
         viewProxy.submitList(tweets)
 
@@ -113,6 +112,7 @@ internal class HomeViewProxyTest {
     @Test
     fun `setOnIconClickListener should set listener into adapter`() {
         val listener: HomeContract.IconClickListener = mock()
+        viewProxy.homeAdapter = adapter
 
         viewProxy.setOnIconClickListener(listener)
 

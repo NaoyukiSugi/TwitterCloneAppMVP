@@ -71,7 +71,8 @@ class HomePresenter(
     }
 
     override fun onRefresh() {
-        TODO("Not yet implemented")
+        viewProxy.initAdapter()
+        getHomeTimeline()
     }
 
     override fun onIconClick(user: User) {

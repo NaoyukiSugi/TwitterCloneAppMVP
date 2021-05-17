@@ -2,6 +2,7 @@ package com.example.twittercloneappmvp.home.view
 
 import android.view.View
 import android.widget.Button
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
@@ -11,9 +12,11 @@ import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.home.contract.HomeContract
 
 class HomeViewProxy(
-    private val activity: AppCompatActivity,
-    private val homeAdapter: HomeAdapter
+    private val activity: AppCompatActivity
 ) : HomeContract.ViewProxy {
+
+    @VisibleForTesting
+    internal lateinit var homeAdapter: HomeAdapter
 
     private val recyclerView: RecyclerView
         get() = activity.findViewById(R.id.recycler_view)
@@ -31,7 +34,10 @@ class HomeViewProxy(
         get() = activity.findViewById(R.id.progress_bar)
 
     override fun initAdapter() {
-        recyclerView.adapter = homeAdapter
+        createHomeAdapter().run {
+            homeAdapter = this
+            recyclerView.adapter = this
+        }
     }
 
     override fun submitList(tweets: List<Tweet>) {
@@ -77,4 +83,7 @@ class HomeViewProxy(
     override fun setOnRefreshListener(listener: HomeContract.RefreshListener) {
         refreshButton.setOnClickListener { listener.onRefresh() }
     }
+
+    @VisibleForTesting
+    internal fun createHomeAdapter() = HomeAdapter()
 }
