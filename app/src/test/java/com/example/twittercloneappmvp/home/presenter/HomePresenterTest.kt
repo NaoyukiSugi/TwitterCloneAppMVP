@@ -103,4 +103,20 @@ internal class HomePresenterTest {
         verify(viewProxy).hideLoadingView()
     }
     // endregion
+
+    // region onRefresh
+    @Test
+    fun `onRefresh should call initAdapter`() {
+        presenter.onRefresh()
+
+        verify(viewProxy).initAdapter()
+    }
+
+    @Test
+    fun `onRefresh should call getHomeTimeline`() {
+        presenter.onRefresh()
+
+        verify(presenter).getHomeTimeline()
+    }
+    // endregion
 }
