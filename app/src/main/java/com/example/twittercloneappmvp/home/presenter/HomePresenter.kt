@@ -7,18 +7,16 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.util.Result
-import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 class HomePresenter @Inject constructor(
     private val viewProxy: HomeContract.ViewProxy,
     private val repository: HomeContract.Repository,
-    @Named("LifecycleOwner") lifecycleOwner: LifecycleOwner
+    lifecycleOwner: LifecycleOwner
 ) : HomeContract.Presenter,
     HomeContract.IconClickListener,
     HomeContract.RefreshListener,

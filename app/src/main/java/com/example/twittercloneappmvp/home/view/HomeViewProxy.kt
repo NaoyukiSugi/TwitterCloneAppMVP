@@ -11,10 +11,9 @@ import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import javax.inject.Inject
-import javax.inject.Named
 
 class HomeViewProxy @Inject constructor(
-    @Named("Fragment") private val fragment: Fragment
+    private val fragment: Fragment
 ) : HomeContract.ViewProxy {
 
     @VisibleForTesting

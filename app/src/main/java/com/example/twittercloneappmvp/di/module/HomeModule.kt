@@ -10,8 +10,10 @@ import com.example.twittercloneappmvp.home.repository.HomeRepository
 import com.example.twittercloneappmvp.home.view.HomeViewProxy
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.android.scopes.FragmentScoped
 
 @Module
 @InstallIn(FragmentComponent::class)
@@ -24,12 +26,15 @@ class HomeModule {
     fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment.viewLifecycleOwner
 
     @Provides
+    @Reusable
     fun provideHomeRepository(api: HomeTimelineApi): HomeContract.Repository = HomeRepository(api)
 
     @Provides
+    @FragmentScoped
     fun provideHomeViewProxy(fragment: Fragment): HomeContract.ViewProxy = HomeViewProxy(fragment)
 
     @Provides
+    @FragmentScoped
     fun providePresenter(
         viewProxy: HomeContract.ViewProxy,
         repository: HomeContract.Repository,

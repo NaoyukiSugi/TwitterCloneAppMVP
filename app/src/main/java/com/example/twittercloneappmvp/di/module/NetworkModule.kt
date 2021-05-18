@@ -6,7 +6,6 @@ import com.example.twittercloneappmvp.di.annotation.OkHttpClientForOldApi
 import com.example.twittercloneappmvp.di.annotation.RetrofitForOldApi
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
@@ -21,6 +20,7 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    @Singleton
     @OkHttpClientForOldApi
     fun provideOkHttpClientForOldApi(): OkHttpClient =
         OkHttpClient.Builder()
@@ -36,6 +36,7 @@ class NetworkModule {
             .build()
 
     @Provides
+    @Singleton
     @RetrofitForOldApi
     fun provideRetrofitForNewAPI(@OkHttpClientForOldApi okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
