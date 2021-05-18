@@ -7,6 +7,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.util.Result
+import dagger.hilt.android.qualifiers.ActivityContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel

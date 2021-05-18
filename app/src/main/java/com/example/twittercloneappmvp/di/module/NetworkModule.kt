@@ -21,7 +21,6 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
-    @Singleton
     @OkHttpClientForOldApi
     fun provideOkHttpClientForOldApi(): OkHttpClient =
         OkHttpClient.Builder()
@@ -37,7 +36,6 @@ class NetworkModule {
             .build()
 
     @Provides
-    @Reusable
     @RetrofitForOldApi
     fun provideRetrofitForNewAPI(@OkHttpClientForOldApi okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
@@ -46,8 +44,8 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
 
+    @Provides
     @Singleton
-    @Reusable
     fun provideHomeTimelineApi(@RetrofitForOldApi retrofit: Retrofit): HomeTimelineApi =
         retrofit.create(HomeTimelineApi::class.java)
 

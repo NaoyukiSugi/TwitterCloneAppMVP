@@ -2,40 +2,37 @@ package com.example.twittercloneappmvp.di.module
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.twittercloneappmvp.HomeFragment
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.presenter.HomePresenter
 import com.example.twittercloneappmvp.home.repository.HomeRepository
 import com.example.twittercloneappmvp.home.view.HomeViewProxy
-import dagger.Binds
 import dagger.Module
-import dagger.Reusable
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
-import dagger.hilt.android.scopes.ActivityScoped
-import javax.inject.Named
 
 @Module
 @InstallIn(FragmentComponent::class)
-interface HomeModule {
+class HomeModule {
 
-    @Binds
-    @Named("Fragment")
-    fun bindFragment(fragment: HomeFragment): Fragment
+    @Provides
+    fun provideHomeFragment(fragment: Fragment): HomeFragment = fragment as HomeFragment
 
-    @Binds
-    @Named("LifecycleOwner")
-    fun bindLifecycleOwner(fragment: HomeFragment): LifecycleOwner
+    @Provides
+    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment.viewLifecycleOwner
 
-    @Binds
-    @Reusable
-    fun bindHomeRepository(repository: HomeRepository): HomeContract.Repository
+    @Provides
+    fun provideHomeRepository(api: HomeTimelineApi): HomeContract.Repository = HomeRepository(api)
 
-    @Binds
-    @ActivityScoped
-    fun bindViewHomeViewProxy(viewProxy: HomeViewProxy): HomeContract.ViewProxy
+    @Provides
+    fun provideHomeViewProxy(fragment: Fragment): HomeContract.ViewProxy = HomeViewProxy(fragment)
 
-    @Binds
-    @ActivityScoped
-    fun bindPresenter(presenter: HomePresenter): HomeContract.Presenter
+    @Provides
+    fun providePresenter(
+        viewProxy: HomeContract.ViewProxy,
+        repository: HomeContract.Repository,
+        lifecycleOwner: LifecycleOwner
+    ): HomeContract.Presenter = HomePresenter(viewProxy, repository, lifecycleOwner)
 }
