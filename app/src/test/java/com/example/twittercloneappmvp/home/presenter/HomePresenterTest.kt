@@ -6,12 +6,14 @@ import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.util.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
+import kotlin.test.assertFalse
 
 internal class HomePresenterTest {
 
@@ -27,6 +29,36 @@ internal class HomePresenterTest {
     fun setUp() {
         Dispatchers.setMain(TestCoroutineDispatcher())
         presenter = spy(HomePresenter(viewProxy, repository, lifecycleOwner))
+    }
+
+    // region onLifecycleEventOnStart
+    @Test
+    fun `onLifecycleEventOnStart should call initAdapter`() {
+        presenter.onLifecycleEventOnStart()
+
+        verify(viewProxy).initAdapter()
+    }
+
+    @Test
+    fun `onLifecycleEventOnStart should call setOnIconClickListener`() {
+        presenter.onLifecycleEventOnStart()
+
+        verify(viewProxy).setOnIconClickListener(presenter)
+    }
+
+    @Test
+    fun `onLifecycleEventOnStart should call setOnRefreshListener`() {
+        presenter.onLifecycleEventOnStart()
+
+        verify(viewProxy).setOnRefreshListener(presenter)
+    }
+    // endregion
+
+    @Test
+    fun `onLifecycleEventOnDestroy should call cancel`() {
+        presenter.onLifecycleEventOnDestroy()
+
+        assertFalse(presenter.isActive)
     }
 
     // region getHomeTimeline
