@@ -26,7 +26,7 @@ class HomePresenter @Inject constructor(
         lifecycleOwner.lifecycle.addObserver(this)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onLifecycleEventOnCreate() {
         viewProxy.run {
             initAdapter()
