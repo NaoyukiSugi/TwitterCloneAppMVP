@@ -1,50 +1,43 @@
 package com.example.twittercloneappmvp.di.module
 
-import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.HomeTimelineApi
-import com.example.twittercloneappmvp.BuildConfig
+import com.example.twittercloneappmvp.HomeFragment
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.presenter.HomePresenter
 import com.example.twittercloneappmvp.home.repository.HomeRepository
 import com.example.twittercloneappmvp.home.view.HomeViewProxy
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.FragmentScoped
-import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
-interface HomeModule {
+@InstallIn(FragmentComponent::class)
+class HomeModule {
 
-    @Binds
-    fun bindActivity(activity: AppCompatActivity): Activity
+    @Provides
+    fun provideHomeFragment(fragment: Fragment): HomeFragment = fragment as HomeFragment
 
-    @Binds
-    fun bindLifecycleOwner(activity: AppCompatActivity): LifecycleOwner
+    @Provides
+    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
 
-    @Binds
+    @Provides
     @Reusable
-    fun bindHomeRepository(repository: HomeRepository): HomeContract.Repository
+    fun provideHomeRepository(api: HomeTimelineApi): HomeContract.Repository = HomeRepository(api)
 
-    @Binds
-    @ActivityScoped
-    fun bindViewHomeViewProxy(viewProxy: HomeViewProxy): HomeContract.ViewProxy
+    @Provides
+    @FragmentScoped
+    fun provideHomeViewProxy(fragment: Fragment): HomeContract.ViewProxy = HomeViewProxy(fragment)
 
-    @Binds
-    @ActivityScoped
-    fun bindPresenter(presenter: HomePresenter): HomeContract.Presenter
+    @Provides
+    @FragmentScoped
+    fun providePresenter(
+        viewProxy: HomeContract.ViewProxy,
+        repository: HomeContract.Repository,
+        lifecycleOwner: LifecycleOwner
+    ): HomeContract.Presenter = HomePresenter(viewProxy, repository, lifecycleOwner)
 }
