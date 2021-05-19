@@ -3,6 +3,4 @@
     <string name="view_home_empty_message">Tweetはありません</string>
     <string name="view_home_error_message">データを取得できませんでした</string>
     <string name="view_home_error_refresh_button">更新する</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
