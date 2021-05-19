@@ -3,7 +3,7 @@ package com.example.twittercloneappmvp.di.module
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.HomeTimelineApi
-import com.example.twittercloneappmvp.HomeFragment
+import com.example.twittercloneappmvp.home.fragment.HomeFragment
 import com.example.twittercloneappmvp.home.contract.HomeContract
 import com.example.twittercloneappmvp.home.presenter.HomePresenter
 import com.example.twittercloneappmvp.home.repository.HomeRepository

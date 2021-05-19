@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.twittercloneappmvp.HomeFragment"
+        android:name="com.example.twittercloneappmvp.home.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.twittercloneappmvp.ProfileFragment"
+        android:name="com.example.twittercloneappmvp.profile.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.twittercloneappmvp.home
+package com.example.twittercloneappmvp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
