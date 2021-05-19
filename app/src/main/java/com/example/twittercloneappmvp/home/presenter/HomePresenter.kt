@@ -33,7 +33,6 @@ class HomePresenter @Inject constructor(
             setOnIconClickListener(this@HomePresenter)
             setOnRefreshListener(this@HomePresenter)
         }
-        getHomeTimeline()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
