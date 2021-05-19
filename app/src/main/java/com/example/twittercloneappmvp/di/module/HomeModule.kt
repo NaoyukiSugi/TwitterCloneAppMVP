@@ -23,7 +23,7 @@ class HomeModule {
     fun provideHomeFragment(fragment: Fragment): HomeFragment = fragment as HomeFragment
 
     @Provides
-    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment.viewLifecycleOwner
+    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
 
     @Provides
     @Reusable
