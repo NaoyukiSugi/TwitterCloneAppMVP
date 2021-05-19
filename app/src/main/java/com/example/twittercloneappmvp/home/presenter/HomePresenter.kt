@@ -27,7 +27,7 @@ class HomePresenter @Inject constructor(
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onLifecycleEventOnCreate() {
+    fun onLifecycleEventOnStart() {
         viewProxy.run {
             initAdapter()
             setOnIconClickListener(this@HomePresenter)
