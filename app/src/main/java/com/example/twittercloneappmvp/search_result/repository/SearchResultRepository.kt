@@ -28,6 +28,4 @@ class SearchResultRepository(
             emit(Result.Error<SearchResultResponse>(response.message()))
         }
     }.flowOn(Dispatchers.IO)
-
-
 }
