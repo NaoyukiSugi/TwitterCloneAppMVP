@@ -3,7 +3,7 @@ package com.example.common_api.search_result
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class SearchResultResponse(
+data class SearchResultTimelineResponse(
     @SerializedName("data")
     val tweets: List<SearchResultTweet>,
     @SerializedName("includes")

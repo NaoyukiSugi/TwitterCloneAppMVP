@@ -1,7 +1,7 @@
 package com.example.twittercloneappmvp.search_result.repository
 
 import com.example.common_api.search_result.SearchQuery
-import com.example.common_api.search_result.SearchResultResponse
+import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.util.Result
 import kotlinx.coroutines.flow.collect
@@ -31,18 +31,18 @@ class SearchResultRepositoryTest {
             val searchQuery = SearchQuery("searchQuery")
             val nextToken = "nextToken"
 
-            val searchResultResponse: SearchResultResponse = mock()
-            val retrofitResponse: Response<SearchResultResponse> = mock {
+            val searchResultTimelineResponse: SearchResultTimelineResponse = mock()
+            val retrofitTimelineResponse: Response<SearchResultTimelineResponse> = mock {
                 on { isSuccessful } doReturn true
-                on { body() } doReturn searchResultResponse
+                on { body() } doReturn searchResultTimelineResponse
             }
-            doReturn(retrofitResponse).whenever(api)
+            doReturn(retrofitTimelineResponse).whenever(api)
                 .getSearchResultTimeline(searchQuery = searchQuery.value, nextToken = nextToken)
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {
-                    assertTrue(it is Result.Success<SearchResultResponse>)
-                    assertEquals(searchResultResponse, it.data)
+                    assertTrue(it is Result.Success<SearchResultTimelineResponse>)
+                    assertEquals(searchResultTimelineResponse, it.data)
                 }
         }
     }
@@ -54,16 +54,16 @@ class SearchResultRepositoryTest {
             val nextToken = "nextToken"
 
             val message = "message"
-            val retrofitResponse: Response<SearchResultResponse> = mock {
+            val retrofitTimelineResponse: Response<SearchResultTimelineResponse> = mock {
                 on { isSuccessful } doReturn false
                 on { message() } doReturn message
             }
-            doReturn(retrofitResponse).whenever(api)
+            doReturn(retrofitTimelineResponse).whenever(api)
                 .getSearchResultTimeline(searchQuery = searchQuery.value, nextToken = nextToken)
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {
-                    assertTrue(it is Result.Error<SearchResultResponse>)
+                    assertTrue(it is Result.Error<SearchResultTimelineResponse>)
                     assertEquals(message, it.message)
                 }
         }
