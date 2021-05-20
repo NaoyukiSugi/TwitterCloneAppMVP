@@ -1,5 +1,6 @@
 package com.example.twittercloneappmvp.feature.home.presenter
 
+import android.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -20,6 +21,7 @@ class HomePresenter @Inject constructor(
 ) : HomeContract.Presenter,
     HomeContract.IconClickListener,
     HomeContract.RefreshListener,
+    SearchView.OnQueryTextListener,
     LifecycleObserver, CoroutineScope by MainScope() {
 
     init {
@@ -32,6 +34,7 @@ class HomePresenter @Inject constructor(
             initAdapter()
             setOnIconClickListener(this@HomePresenter)
             setOnRefreshListener(this@HomePresenter)
+            setOnQueryTextListener(this@HomePresenter)
         }
     }
 
@@ -77,5 +80,17 @@ class HomePresenter @Inject constructor(
 
     override fun onIconClick(user: User) {
         TODO("Not yet implemented")
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            viewProxy.navigateToSearchResult(query)
+        }
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        // do nothing
+        return false
     }
 }

@@ -24,7 +24,11 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.example.twittercloneappmvp.SearchResultFragment"
+        android:name="com.example.twittercloneappmvp.feature.search_result.fragment.SearchResultFragment"
         android:label="fragment_search_result"
-        tools:layout="@layout/fragment_search_result" />
+        tools:layout="@layout/fragment_search_result">
+        <argument
+            android:name="search_query"
+            app:argType="string" />
+    </fragment>
 </navigation>

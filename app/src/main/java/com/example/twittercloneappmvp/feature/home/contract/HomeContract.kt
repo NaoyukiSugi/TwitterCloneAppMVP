@@ -1,7 +1,9 @@
 package com.example.twittercloneappmvp.feature.home.contract
 
+import android.widget.SearchView
 import com.example.common_api.home_timeline.Tweet
 import com.example.common_api.home_timeline.User
+import com.example.common_api.search_result.SearchQuery
 import com.example.twittercloneappmvp.util.Result
 
 interface HomeContract {
@@ -22,6 +24,8 @@ interface HomeContract {
         fun hideLoadingView()
         fun setOnIconClickListener(listener: IconClickListener)
         fun setOnRefreshListener(listener: RefreshListener)
+        fun setOnQueryTextListener(listener: SearchView.OnQueryTextListener)
+        fun navigateToSearchResult(searchQuery: String)
     }
 
     interface RefreshListener {
