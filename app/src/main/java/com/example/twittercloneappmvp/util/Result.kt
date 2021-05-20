@@ -1,4 +1,4 @@
-package com.example.twittercloneappmvp.home.util
+package com.example.twittercloneappmvp.util
 
 sealed class Result<T>(
     val data: T? = null,

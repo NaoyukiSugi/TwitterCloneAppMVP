@@ -3,7 +3,7 @@ package com.example.twittercloneappmvp.home.repository
 import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.home.contract.HomeContract
-import com.example.twittercloneappmvp.home.util.Result
+import com.example.twittercloneappmvp.util.Result
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(

@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.home.contract.HomeContract
-import com.example.twittercloneappmvp.home.util.Result
+import com.example.twittercloneappmvp.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.TestCoroutineDispatcher
