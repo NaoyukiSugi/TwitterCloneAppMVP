@@ -13,5 +13,5 @@ interface SearchResultTimelineApi {
         @Query("tweet.fields") tweetField: String = "created_at",
         @QueryMap(encoded = true) userFields: Map<String, String> = mapOf("user.fields" to "profile_image_url,description"),
         @Query("next_token") nextToken: String? = null
-    ): Response<SearchResultResponse>
+    ): Response<SearchResultTimelineResponse>
 }

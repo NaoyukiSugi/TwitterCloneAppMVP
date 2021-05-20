@@ -1,7 +1,7 @@
 package com.example.twittercloneappmvp.search_result.repository
 
 import com.example.common_api.search_result.SearchQuery
-import com.example.common_api.search_result.SearchResultResponse
+import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.util.Result
@@ -17,7 +17,7 @@ class SearchResultRepository(
     override fun getSearchResultTimeline(
         searchQuery: SearchQuery,
         nextToken: String?
-    ): Flow<Result<SearchResultResponse>> = flow {
+    ): Flow<Result<SearchResultTimelineResponse>> = flow {
         val response = api.getSearchResultTimeline(
             searchQuery = searchQuery.value,
             nextToken = nextToken
@@ -25,7 +25,7 @@ class SearchResultRepository(
         if (response.isSuccessful) {
             response.body()?.let { emit(Result.Success(it)) }
         } else {
-            emit(Result.Error<SearchResultResponse>(response.message()))
+            emit(Result.Error<SearchResultTimelineResponse>(response.message()))
         }
     }.flowOn(Dispatchers.IO)
 }
