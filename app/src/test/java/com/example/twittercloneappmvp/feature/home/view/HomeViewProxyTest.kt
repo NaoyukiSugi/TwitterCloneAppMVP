@@ -2,6 +2,7 @@ package com.example.twittercloneappmvp.feature.home.view
 
 import android.view.View
 import android.widget.Button
+import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
@@ -21,17 +22,20 @@ internal class HomeViewProxyTest {
     private val emptyView: View = mock()
     private val progressBar: ContentLoadingProgressBar = mock()
     private val refreshButton: Button = mock()
+    private val searchView: SearchView = mock()
     private val view: View = mock {
         on { findViewById<RecyclerView>(R.id.recycler_view) } doReturn recyclerView
         on { findViewById<View>(R.id.error_view) } doReturn errorView
         on { findViewById<View>(R.id.empty_view) } doReturn emptyView
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
+        on { findViewById<SearchView>(R.id.search_view) } doReturn searchView
     }
     private val fragment: Fragment = mock {
         on { view } doReturn view
     }
     private val adapter: HomeAdapter = mock()
+    private val navController = TestNav
 
     @BeforeEach
     fun setUp() {
@@ -134,5 +138,14 @@ internal class HomeViewProxyTest {
         listener.onClick(refreshButton)
 
         verify(refreshListener).onRefresh()
+    }
+
+    @Test
+    fun `setOnQueryTextListener should set listener into searchView`() {
+        val listener: SearchView.OnQueryTextListener = mock()
+
+        viewProxy.setOnQueryTextListener(listener)
+
+        verify(searchView).setOnQueryTextListener(listener)
     }
 }
