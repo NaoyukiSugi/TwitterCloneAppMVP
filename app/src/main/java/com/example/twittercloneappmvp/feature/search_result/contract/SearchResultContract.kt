@@ -47,4 +47,8 @@ interface SearchResultContract {
         fun setOnRefreshListener(listener: RefreshListener)
     }
 
+    interface Presenter {
+        fun getSearchResultTimeline()
+    }
+
 }
