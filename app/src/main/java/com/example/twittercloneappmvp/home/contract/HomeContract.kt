@@ -2,7 +2,7 @@ package com.example.twittercloneappmvp.home.contract
 
 import com.example.common_api.home_timeline.Tweet
 import com.example.common_api.home_timeline.User
-import com.example.twittercloneappmvp.home.util.Result
+import com.example.twittercloneappmvp.util.Result
 
 interface HomeContract {
     interface Repository {

@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.home.contract.HomeContract
-import com.example.twittercloneappmvp.home.util.Result
+import com.example.twittercloneappmvp.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
