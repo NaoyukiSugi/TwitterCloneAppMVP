@@ -2,7 +2,6 @@ package com.example.twittercloneappmvp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.twittercloneappmvp.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

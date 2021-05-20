@@ -2,14 +2,18 @@ package com.example.twittercloneappmvp.feature.home.view
 
 import android.view.View
 import android.widget.Button
+import android.widget.SearchView
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.feature.home.fragment.HomeFragmentDirections
+import com.example.twittercloneappmvp.util.navigateSafe
 import javax.inject.Inject
 
 class HomeViewProxy @Inject constructor(
@@ -33,6 +37,9 @@ class HomeViewProxy @Inject constructor(
 
     private val progressBar: ContentLoadingProgressBar?
         get() = fragment.view?.findViewById(R.id.progress_bar)
+
+    private val searchView: SearchView?
+        get() = fragment.view?.findViewById(R.id.search_view)
 
     override fun initAdapter() {
         createHomeAdapter().run {
@@ -83,6 +90,18 @@ class HomeViewProxy @Inject constructor(
 
     override fun setOnRefreshListener(listener: HomeContract.RefreshListener) {
         refreshButton?.setOnClickListener { listener.onRefresh() }
+    }
+
+    override fun setOnQueryTextListener(listener: SearchView.OnQueryTextListener) {
+        searchView?.setOnQueryTextListener(listener)
+    }
+
+    override fun navigateToSearchResult(searchQuery: String) {
+        fragment
+            .findNavController()
+            .navigateSafe(
+                HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(searchQuery)
+            )
     }
 
     @VisibleForTesting
