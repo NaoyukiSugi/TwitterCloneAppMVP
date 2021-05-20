@@ -1,4 +1,4 @@
-package com.example.twittercloneappmvp.home.view
+package com.example.twittercloneappmvp.search_result.view
 
 import android.view.View
 import android.widget.ImageView
@@ -6,17 +6,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.example.common_api.home_timeline.Tweet
-import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.R
-import com.example.twittercloneappmvp.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
+import com.example.twittercloneappmvp.search_result.contract.SearchResultContract
 
-class HomeViewHolder(
+class SearchResultViewHolder(
     private val view: View,
-    private val viewProxy: HomeContract.ViewHolderViewProxy = ViewHolderViewProxy(view)
+    private val viewProxy: SearchResultContract.ViewHolderViewProxy = ViewHolderViewProxy(view)
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(tweet: Tweet, listener: HomeContract.IconClickListener?) {
+    fun bind(tweet: Tweet, listener: SearchResultContract.IconClickListener?) {
         viewProxy.run {
             loadImageToView(tweet.user.profileImageUrlHttps)
             setName(tweet.user.name)
@@ -29,7 +29,7 @@ class HomeViewHolder(
     internal class ViewHolderViewProxy(
         private val view: View,
         private val requestManager: RequestManager = Glide.with(view)
-    ) : HomeContract.ViewHolderViewProxy {
+    ) : SearchResultContract.ViewHolderViewProxy {
 
         private val iconIv: ImageView
             get() = view.findViewById(R.id.user_icon)
@@ -59,7 +59,10 @@ class HomeViewHolder(
             textTv.text = text
         }
 
-        override fun setOnClickListener(user: User, listener: HomeContract.IconClickListener?) {
+        override fun setOnClickListener(
+            user: User,
+            listener: SearchResultContract.IconClickListener?
+        ) {
             iconIv.setOnClickListener { listener?.onIconClick(user) }
         }
     }

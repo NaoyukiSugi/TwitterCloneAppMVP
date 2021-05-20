@@ -1,4 +1,4 @@
-package com.example.twittercloneappmvp.home.view
+package com.example.twittercloneappmvp.search_result.view
 
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -6,22 +6,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
-import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.R
-import com.example.twittercloneappmvp.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.User
+import com.example.twittercloneappmvp.search_result.contract.SearchResultContract
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 
-class HomeViewHolderViewProxyTest {
+class SearchResultViewHolderViewProxyTest {
 
-    private lateinit var viewProxy: HomeViewHolder.ViewHolderViewProxy
+    private lateinit var viewProxy: SearchResultViewHolder.ViewHolderViewProxy
     private val requestManager: RequestManager = mock()
     private val iconIv: ImageView = mock()
     private val nameTv: TextView = mock()
     private val screenNameTv: TextView = mock()
     private val textTv: TextView = mock()
-
     private val view: View = mock {
         on { findViewById<ImageView>(R.id.user_icon) } doReturn iconIv
         on { findViewById<TextView>(R.id.user_name) } doReturn nameTv
@@ -31,7 +30,7 @@ class HomeViewHolderViewProxyTest {
 
     @BeforeEach
     fun setUp() {
-        viewProxy = HomeViewHolder.ViewHolderViewProxy(view, requestManager)
+        viewProxy = SearchResultViewHolder.ViewHolderViewProxy(view, requestManager)
     }
 
     @Test
@@ -75,11 +74,11 @@ class HomeViewHolderViewProxyTest {
     @Test
     fun `setOnClickListener should set the listener to iconIv`() {
         val user: User = mock()
-        val listener: HomeContract.IconClickListener = mock()
+        val listener: SearchResultContract.IconClickListener = mock()
 
         viewProxy.setOnClickListener(user, listener)
 
-        val clickListener = argumentCaptor<View.OnClickListener>() {
+        val clickListener = argumentCaptor<View.OnClickListener> {
             verify(iconIv).setOnClickListener(capture())
         }.firstValue
         clickListener.onClick(view)
