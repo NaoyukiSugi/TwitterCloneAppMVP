@@ -35,7 +35,6 @@ internal class HomeViewProxyTest {
         on { view } doReturn view
     }
     private val adapter: HomeAdapter = mock()
-    private val navController = TestNav
 
     @BeforeEach
     fun setUp() {
