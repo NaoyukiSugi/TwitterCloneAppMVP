@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 
-internal class SearchResultAdapterTest {
+internal class SearchNetworkResultAdapterTest {
 
     private lateinit var adapter: SearchResultAdapter
     private val viewHolder: SearchResultViewHolder = mock()

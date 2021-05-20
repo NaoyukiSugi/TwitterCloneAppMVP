@@ -1,19 +1,17 @@
 package com.example.twittercloneappmvp.feature.search_result.contract
 
-import com.example.common_api.search_result.SearchQuery
 import com.example.common_api.search_result.SearchResultTimelineResponse
-import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
-import com.example.twittercloneappmvp.util.Result
+import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface SearchResultContract {
     interface Repository {
         fun getSearchResultTimeline(
-            searchQuery: SearchQuery,
+            searchQuery: String,
             nextToken: String?
-        ): Flow<Result<SearchResultTimelineResponse>>
+        ): Flow<NetworkResult<SearchResultTimelineResponse>>
     }
 
     interface ViewHolderViewProxy {

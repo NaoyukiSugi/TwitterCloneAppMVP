@@ -15,7 +15,7 @@ import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
 import kotlin.test.assertFalse
 
-internal class SearchResultPresenterTest {
+internal class SearchNetworkResultPresenterTest {
 
     private lateinit var presenter: SearchResultPresenter
     private val viewProxy: SearchResultContract.ViewProxy = mock()

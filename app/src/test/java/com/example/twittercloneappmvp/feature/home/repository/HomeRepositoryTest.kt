@@ -2,7 +2,7 @@ package com.example.twittercloneappmvp.feature.home.repository
 
 import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.common_api.home_timeline.Tweet
-import com.example.twittercloneappmvp.util.Result
+import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,7 +34,7 @@ class HomeRepositoryTest {
 
             val result = repository.getHomeTimeline()
 
-            assertTrue(result is Result.Success<List<Tweet>>)
+            assertTrue(result is NetworkResult.Success<List<Tweet>>)
             assertEquals(tweetList, result.data)
         }
     }
@@ -51,7 +51,7 @@ class HomeRepositoryTest {
 
             val result = repository.getHomeTimeline()
 
-            assertTrue(result is Result.Error<List<Tweet>>)
+            assertTrue(result is NetworkResult.Error<List<Tweet>>)
             assertEquals(message, result.message)
         }
     }
