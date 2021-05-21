@@ -2,7 +2,7 @@ package com.example.twittercloneappmvp.feature.home.contract
 
 import android.widget.SearchView
 import com.example.common_api.home_timeline.Tweet
-import com.example.common_api.home_timeline.User
+import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.util.NetworkResult
 
 interface HomeContract {
@@ -36,11 +36,11 @@ interface HomeContract {
         fun setName(name: String)
         fun setScreenName(screenName: String)
         fun setText(text: String)
-        fun setOnClickListener(user: User, listener: IconClickListener?)
+        fun setOnClickListener(responseUser: ResponseUser, listener: IconClickListener?)
     }
 
     interface IconClickListener {
-        fun onIconClick(user: User)
+        fun onIconClick(responseUser: ResponseUser)
     }
 
     interface Presenter {
