@@ -7,7 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.common_api.home_timeline.User
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
-import com.example.twittercloneappmvp.util.Result
+import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -45,7 +45,7 @@ class HomePresenter @Inject constructor(
         launch {
             viewProxy.showLoadingView()
             when (val result = repository.getHomeTimeline()) {
-                is Result.Success -> {
+                is NetworkResult.Success -> {
                     if (result.data != null && result.data.isNotEmpty()) {
                         viewProxy.run {
                             hideErrorView()
@@ -61,7 +61,7 @@ class HomePresenter @Inject constructor(
                         }
                     }
                 }
-                is Result.Error -> {
+                is NetworkResult.Error -> {
                     viewProxy.run {
                         hideRecyclerView()
                         hideEmptyView()

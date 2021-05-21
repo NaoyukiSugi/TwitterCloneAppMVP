@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
-import com.example.twittercloneappmvp.util.Result
+import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -74,7 +74,7 @@ internal class HomePresenterTest {
         runBlockingTest {
             val tweetList =
                 listOf(Tweet(id = 0L, createdAt = "createdAt", text = "text", user = mock()))
-            val mockResult = Result.Success(tweetList)
+            val mockResult = NetworkResult.Success(tweetList)
             doReturn(mockResult).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
@@ -89,7 +89,7 @@ internal class HomePresenterTest {
     @Test
     fun `getHomeTimeline should only show emptyView when result data is null`() {
         runBlockingTest {
-            val mockResult = Result.Success(null)
+            val mockResult = NetworkResult.Success(null)
             doReturn(mockResult).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
@@ -103,7 +103,7 @@ internal class HomePresenterTest {
     @Test
     fun `getHomeTimeline should only show emptyView when result data is empty`() {
         runBlockingTest {
-            val mockResult = Result.Success(emptyList<Tweet>())
+            val mockResult = NetworkResult.Success(emptyList<Tweet>())
             doReturn(mockResult).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
@@ -117,7 +117,7 @@ internal class HomePresenterTest {
     @Test
     fun `getHomeTimeline should only show errorView when result is Error`() {
         runBlockingTest {
-            val mockResult = Result.Error(message = "message", data = null)
+            val mockResult = NetworkResult.Error(message = "message", data = null)
             doReturn(mockResult).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
