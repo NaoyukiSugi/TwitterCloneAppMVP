@@ -1,6 +1,5 @@
 package com.example.twittercloneappmvp.feature.search_result.repository
 
-import com.example.common_api.search_result.SearchQuery
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.util.NetworkResult
@@ -27,7 +26,7 @@ class SearchResultRepositoryTest {
     @Test
     fun `getSearchResultTimeline should emit Success when response is successful`() {
         runBlocking {
-            val searchQuery = SearchQuery("searchQuery")
+            val searchQuery = "searchQuery"
             val nextToken = "nextToken"
 
             val searchResultTimelineResponse: SearchResultTimelineResponse = mock()
@@ -36,7 +35,7 @@ class SearchResultRepositoryTest {
                 on { body() } doReturn searchResultTimelineResponse
             }
             doReturn(retrofitTimelineResponse).whenever(api)
-                .getSearchResultTimeline(searchQuery = searchQuery.value, nextToken = nextToken)
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {
@@ -49,7 +48,7 @@ class SearchResultRepositoryTest {
     @Test
     fun `getSearchResultTimeline should emit Error when response is not successful`() {
         runBlocking {
-            val searchQuery = SearchQuery("searchQuery")
+            val searchQuery = "searchQuery"
             val nextToken = "nextToken"
 
             val message = "message"
@@ -58,7 +57,7 @@ class SearchResultRepositoryTest {
                 on { message() } doReturn message
             }
             doReturn(retrofitTimelineResponse).whenever(api)
-                .getSearchResultTimeline(searchQuery = searchQuery.value, nextToken = nextToken)
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {

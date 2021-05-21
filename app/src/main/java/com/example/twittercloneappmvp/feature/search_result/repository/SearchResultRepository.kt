@@ -1,6 +1,5 @@
 package com.example.twittercloneappmvp.feature.search_result.repository
 
-import com.example.common_api.search_result.SearchQuery
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
@@ -15,11 +14,11 @@ class SearchResultRepository(
 ) : SearchResultContract.Repository {
 
     override fun getSearchResultTimeline(
-        searchQuery: SearchQuery,
+        searchQuery: String,
         nextToken: String?
     ): Flow<NetworkResult<SearchResultTimelineResponse>> = flow {
         val response = api.getSearchResultTimeline(
-            searchQuery = searchQuery.value,
+            searchQuery = searchQuery,
             nextToken = nextToken
         )
         if (response.isSuccessful) {
