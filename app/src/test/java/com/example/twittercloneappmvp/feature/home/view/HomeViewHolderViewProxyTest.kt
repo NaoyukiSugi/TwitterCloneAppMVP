@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
-import com.example.common_api.home_timeline.User
+import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import org.junit.jupiter.api.BeforeEach
@@ -74,7 +74,7 @@ class HomeViewHolderViewProxyTest {
 
     @Test
     fun `setOnClickListener should set the listener to iconIv`() {
-        val user: User = mock()
+        val user: ResponseUser = mock()
         val listener: HomeContract.IconClickListener = mock()
 
         viewProxy.setOnClickListener(user, listener)
