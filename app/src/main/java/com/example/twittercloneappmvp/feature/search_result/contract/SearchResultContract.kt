@@ -1,6 +1,5 @@
 package com.example.twittercloneappmvp.feature.search_result.contract
 
-import com.example.common_api.search_result.SearchQuery
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
@@ -10,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface SearchResultContract {
     interface Repository {
         fun getSearchResultTimeline(
-            searchQuery: SearchQuery,
+            searchQuery: String,
             nextToken: String?
         ): Flow<NetworkResult<SearchResultTimelineResponse>>
     }
