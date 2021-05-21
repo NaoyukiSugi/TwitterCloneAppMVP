@@ -3,11 +3,9 @@ package com.example.twittercloneappmvp.feature.search_result.repository
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
-import com.example.twittercloneappmvp.util.NetworkResult
-import kotlinx.coroutines.Dispatchers
+import com.example.twittercloneappmvp.model.Future
+import com.example.twittercloneappmvp.util.apiFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 class SearchResultRepository(
     private val api: SearchResultTimelineApi
@@ -16,18 +14,6 @@ class SearchResultRepository(
     override fun getSearchResultTimeline(
         searchQuery: String,
         nextToken: String?
-    ): Flow<NetworkResult<SearchResultTimelineResponse>> = flow {
-        try {
-            val response =
-                api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
-            if (response.isSuccessful) {
-                response.body()?.let { emit(NetworkResult.Success(it)) }
-            } else {
-                emit(NetworkResult.Error<SearchResultTimelineResponse>(response.message()))
-            }
-        } catch (e: Exception) {
-            emit(NetworkResult.Error<SearchResultTimelineResponse>(e.message.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
-
+    ): Flow<Future<SearchResultTimelineResponse>> =
+        apiFlow { api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken) }
 }
