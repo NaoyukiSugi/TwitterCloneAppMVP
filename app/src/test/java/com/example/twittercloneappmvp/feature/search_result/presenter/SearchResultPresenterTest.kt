@@ -3,6 +3,7 @@ package com.example.twittercloneappmvp.feature.search_result.presenter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
+import com.example.twittercloneappmvp.feature.search_result.viewmodel.SearchResultViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -21,12 +22,13 @@ internal class SearchResultPresenterTest {
     private val viewProxy: SearchResultContract.ViewProxy = mock()
     private val repository: SearchResultContract.Repository = mock()
     private val lifecycle: Lifecycle = mock()
+    private val viewModel: SearchResultViewModel = mock()
     private val lifecycleOwner: LifecycleOwner = mock { on { lifecycle } doReturn lifecycle }
 
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        presenter = spy(SearchResultPresenter(viewProxy, repository, lifecycleOwner))
+        presenter = spy(SearchResultPresenter(viewProxy, repository, viewModel, lifecycleOwner))
     }
 
     // region onLifecycleEventOnStart
