@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 
-internal class SearchNetworkResultViewProxyTest {
+internal class SearchResultViewProxyTest {
 
     private lateinit var viewProxy: SearchResultViewProxy
     private val recyclerView: RecyclerView = mock()
