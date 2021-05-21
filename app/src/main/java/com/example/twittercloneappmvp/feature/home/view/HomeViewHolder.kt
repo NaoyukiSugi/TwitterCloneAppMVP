@@ -59,8 +59,8 @@ class HomeViewHolder(
             textTv.text = text
         }
 
-        override fun setOnClickListener(responseUser: ResponseUser, listener: HomeContract.IconClickListener?) {
-            iconIv.setOnClickListener { listener?.onIconClick(responseUser) }
+        override fun setOnClickListener(user: ResponseUser, listener: HomeContract.IconClickListener?) {
+            iconIv.setOnClickListener { listener?.onIconClick(user) }
         }
     }
 }

@@ -74,16 +74,16 @@ class HomeViewHolderViewProxyTest {
 
     @Test
     fun `setOnClickListener should set the listener to iconIv`() {
-        val responseUser: ResponseUser = mock()
+        val user: ResponseUser = mock()
         val listener: HomeContract.IconClickListener = mock()
 
-        viewProxy.setOnClickListener(responseUser, listener)
+        viewProxy.setOnClickListener(user, listener)
 
         val clickListener = argumentCaptor<View.OnClickListener>() {
             verify(iconIv).setOnClickListener(capture())
         }.firstValue
         clickListener.onClick(view)
 
-        verify(listener).onIconClick(responseUser)
+        verify(listener).onIconClick(user)
     }
 }

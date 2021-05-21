@@ -36,11 +36,11 @@ interface HomeContract {
         fun setName(name: String)
         fun setScreenName(screenName: String)
         fun setText(text: String)
-        fun setOnClickListener(responseUser: ResponseUser, listener: IconClickListener?)
+        fun setOnClickListener(user: ResponseUser, listener: IconClickListener?)
     }
 
     interface IconClickListener {
-        fun onIconClick(responseUser: ResponseUser)
+        fun onIconClick(user: ResponseUser)
     }
 
     interface Presenter {

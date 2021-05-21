@@ -78,7 +78,7 @@ class HomePresenter @Inject constructor(
         getHomeTimeline()
     }
 
-    override fun onIconClick(responseUser: ResponseUser) {
+    override fun onIconClick(user: ResponseUser) {
         TODO("Not yet implemented")
     }
 
