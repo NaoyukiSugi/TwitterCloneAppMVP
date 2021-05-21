@@ -3,7 +3,7 @@ package com.example.twittercloneappmvp.feature.search_result.repository
 import com.example.common_api.search_result.SearchQuery
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.common_api.search_result.SearchResultTimelineApi
-import com.example.twittercloneappmvp.util.Result
+import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
@@ -40,7 +40,7 @@ class SearchResultRepositoryTest {
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {
-                    assertTrue(it is Result.Success<SearchResultTimelineResponse>)
+                    assertTrue(it is NetworkResult.Success<SearchResultTimelineResponse>)
                     assertEquals(searchResultTimelineResponse, it.data)
                 }
         }
@@ -62,7 +62,7 @@ class SearchResultRepositoryTest {
 
             repository.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
                 .collect {
-                    assertTrue(it is Result.Error<SearchResultTimelineResponse>)
+                    assertTrue(it is NetworkResult.Error<SearchResultTimelineResponse>)
                     assertEquals(message, it.message)
                 }
         }
