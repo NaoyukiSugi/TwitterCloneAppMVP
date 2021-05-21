@@ -7,7 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.*
 import java.io.Serializable
 
-
 @MainThread
 inline fun <reified Args : NavArgs> navArgs(savedStateHandle: SavedStateHandle) =
     NavArgsLazy(Args::class) {

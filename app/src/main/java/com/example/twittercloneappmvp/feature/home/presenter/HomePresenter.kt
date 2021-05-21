@@ -5,7 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.example.common_api.home_timeline.User
+import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.CoroutineScope
@@ -78,7 +78,7 @@ class HomePresenter @Inject constructor(
         getHomeTimeline()
     }
 
-    override fun onIconClick(user: User) {
+    override fun onIconClick(user: ResponseUser) {
         TODO("Not yet implemented")
     }
 

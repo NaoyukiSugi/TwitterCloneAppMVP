@@ -5,11 +5,11 @@ import java.io.Serializable
 
 data class SearchResultTimelineResponse(
     @SerializedName("data")
-    val responseTweets: List<ResponseTweet>,
+    val tweets: List<ResponseTweet>,
     @SerializedName("includes")
     val includes: ResponseUserList,
     @SerializedName("meta")
-    val meta: Meta
+    val meta: ResponseMeta
 ) : Serializable
 
 data class ResponseTweet(
@@ -25,7 +25,7 @@ data class ResponseTweet(
 
 data class ResponseUserList(
     @SerializedName("users")
-    val responseUsers: List<ResponseUser>
+    val users: List<ResponseUser>
 ) : Serializable
 
 data class ResponseUser(
@@ -41,7 +41,7 @@ data class ResponseUser(
     val profileImageUrlHttps: String,
 ) : Serializable
 
-data class Meta(
+data class ResponseMeta(
     @SerializedName("next_token")
     val nextToken: String?
 ) : Serializable

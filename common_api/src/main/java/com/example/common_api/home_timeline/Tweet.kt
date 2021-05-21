@@ -11,10 +11,10 @@ data class Tweet(
     @SerializedName("text")
     val text: String,
     @SerializedName("user")
-    val user: User
+    val user: ResponseUser
 ) : Serializable
 
-data class User(
+data class ResponseUser(
     @SerializedName("id")
     val id: Long,
     @SerializedName("name")
