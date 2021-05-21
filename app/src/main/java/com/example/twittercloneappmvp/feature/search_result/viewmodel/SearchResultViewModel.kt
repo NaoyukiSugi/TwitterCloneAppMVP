@@ -55,10 +55,10 @@ class SearchResultViewModel(
         }
     }
 
-    fun convertToTweets(searchResultTimelineResponse: SearchResultTimelineResponse): List<Tweet> {
+    private fun convertToTweets(searchResultTimelineResponse: SearchResultTimelineResponse): List<Tweet> {
         return searchResultTimelineResponse.let { response ->
-            val userIdMap = response.includes.responseUsers.associateBy { it.id }
-            response.responseTweets.map {
+            val userIdMap = response.includes.users.associateBy { it.id }
+            response.tweets.map {
                 val responseUser = userIdMap[it.authorId]
                 Tweet(
                     id = it.id,

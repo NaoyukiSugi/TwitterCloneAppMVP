@@ -17,14 +17,17 @@ class SearchResultRepository(
         searchQuery: String,
         nextToken: String?
     ): Flow<NetworkResult<SearchResultTimelineResponse>> = flow {
-        val response = api.getSearchResultTimeline(
-            searchQuery = searchQuery,
-            nextToken = nextToken
-        )
-        if (response.isSuccessful) {
-            response.body()?.let { emit(NetworkResult.Success(it)) }
-        } else {
-            emit(NetworkResult.Error<SearchResultTimelineResponse>(response.message()))
+        try {
+            val response =
+                api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+            if (response.isSuccessful) {
+                response.body()?.let { emit(NetworkResult.Success(it)) }
+            } else {
+                emit(NetworkResult.Error<SearchResultTimelineResponse>(response.message()))
+            }
+        } catch (e: Exception) {
+            emit(NetworkResult.Error<SearchResultTimelineResponse>(e.message.toString()))
         }
     }.flowOn(Dispatchers.IO)
+
 }
