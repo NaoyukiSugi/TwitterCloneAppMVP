@@ -3,6 +3,7 @@ package com.example.twittercloneappmvp.feature.home.repository
 import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.common_api.home_timeline.ResponseTweet
 import com.example.twittercloneappmvp.model.Future
+import com.example.twittercloneappmvp.model.Tweet
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -10,10 +11,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 import retrofit2.HttpException
 import retrofit2.Response
 
@@ -24,7 +22,7 @@ class HomeRepositoryTest {
 
     @BeforeEach
     fun setUp() {
-        repository = HomeRepository(api)
+        repository = spy(HomeRepository(api))
     }
 
     // region getHomeTimeline
@@ -45,18 +43,26 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should emit Success when response is successful`() {
         runBlocking {
-            val mockedTweetList: List<ResponseTweet> = mock()
+            val responseTweet = ResponseTweet(
+                id = 0L,
+                createdAt = "createdAt",
+                text = "text",
+                user = mock()
+            )
+            val responseTweetList: List<ResponseTweet> = listOf(responseTweet)
             val response: Response<List<ResponseTweet>> = mock {
                 on { isSuccessful } doReturn true
-                on { body() } doReturn mockedTweetList
+                on { body() } doReturn responseTweetList
             }
+            val tweet: Tweet = mock()
             doReturn(response).whenever(api).getHomeTimeline()
+            doReturn(tweet).whenever(repository).convertToTweet(responseTweet)
 
             val result = repository.getHomeTimeline()
 
             result.collect {
                 it.transform { tweetList ->
-                    assertEquals(mockedTweetList, tweetList)
+                    assertEquals(listOf(tweet), tweetList)
                 }
             }
         }
