@@ -21,7 +21,11 @@
         android:id="@+id/profileFragment"
         android:name="com.example.twittercloneappmvp.feature.profile.fragment.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="user"
+            app:argType="com.example.twittercloneappmvp.model.User" />
+    </fragment>
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.example.twittercloneappmvp.feature.search_result.fragment.SearchResultFragment"

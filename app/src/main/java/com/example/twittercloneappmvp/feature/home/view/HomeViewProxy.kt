@@ -13,6 +13,7 @@ import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.feature.home.fragment.HomeFragmentDirections
 import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 import com.example.twittercloneappmvp.util.navigateSafe
 import javax.inject.Inject
 
@@ -102,6 +103,12 @@ class HomeViewProxy @Inject constructor(
             .navigateSafe(
                 HomeFragmentDirections.actionHomeFragmentToSearchResultFragment(searchQuery)
             )
+    }
+
+    override fun navigateToProfile(user: User) {
+        fragment
+            .findNavController()
+            .navigateSafe(HomeFragmentDirections.actionHomeFragmentToProfileFragment(user))
     }
 
     @VisibleForTesting
