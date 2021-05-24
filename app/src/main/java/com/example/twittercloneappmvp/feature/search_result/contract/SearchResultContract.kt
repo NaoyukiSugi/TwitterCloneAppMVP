@@ -1,6 +1,7 @@
 package com.example.twittercloneappmvp.feature.search_result.contract
 
 import com.example.common_api.search_result.SearchResultTimelineResponse
+import com.example.twittercloneappmvp.model.Future
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
 import com.example.twittercloneappmvp.util.NetworkResult
@@ -11,7 +12,7 @@ interface SearchResultContract {
         fun getSearchResultTimeline(
             searchQuery: String,
             nextToken: String?
-        ): Flow<NetworkResult<SearchResultTimelineResponse>>
+        ): Flow<Future<List<Tweet>>>
     }
 
     interface ViewHolderViewProxy {
