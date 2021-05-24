@@ -6,10 +6,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.example.common_api.home_timeline.Tweet
-import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 
 class HomeViewHolder(
     private val view: View,
@@ -59,7 +59,7 @@ class HomeViewHolder(
             textTv.text = text
         }
 
-        override fun setOnClickListener(user: ResponseUser, listener: HomeContract.IconClickListener?) {
+        override fun setOnClickListener(user: User, listener: HomeContract.IconClickListener?) {
             iconIv.setOnClickListener { listener?.onIconClick(user) }
         }
     }

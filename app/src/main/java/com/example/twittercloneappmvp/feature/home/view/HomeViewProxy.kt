@@ -9,10 +9,10 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.feature.home.fragment.HomeFragmentDirections
+import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.util.navigateSafe
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package com.example.twittercloneappmvp.feature.home.repository
 
 import com.example.common_api.home_timeline.HomeTimelineApi
-import com.example.common_api.home_timeline.Tweet
+import com.example.common_api.home_timeline.ResponseTweet
 import com.example.twittercloneappmvp.model.Future
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -31,7 +31,7 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should call getHomeTimeline of api`() {
         runBlocking {
-            val response: Response<List<Tweet>> = mock()
+            val response: Response<List<ResponseTweet>> = mock()
             doReturn(response).whenever(api).getHomeTimeline()
 
             val result = repository.getHomeTimeline()
@@ -45,8 +45,8 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should emit Success when response is successful`() {
         runBlocking {
-            val mockedTweetList: List<Tweet> = mock()
-            val response: Response<List<Tweet>> = mock {
+            val mockedTweetList: List<ResponseTweet> = mock()
+            val response: Response<List<ResponseTweet>> = mock {
                 on { isSuccessful } doReturn true
                 on { body() } doReturn mockedTweetList
             }
@@ -65,7 +65,7 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should emit Error of HttpException when response is not successful`() {
         runBlocking {
-            val response: Response<List<Tweet>> = mock {
+            val response: Response<List<ResponseTweet>> = mock {
                 on { isSuccessful } doReturn false
             }
             doReturn(response).whenever(api).getHomeTimeline()
@@ -92,7 +92,7 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should emit Proceeding when starting`() {
         runBlocking {
-            val response: Response<List<Tweet>> = mock {}
+            val response: Response<List<ResponseTweet>> = mock {}
             doReturn(response).whenever(api).getHomeTimeline()
 
             val result = repository.getHomeTimeline().first()

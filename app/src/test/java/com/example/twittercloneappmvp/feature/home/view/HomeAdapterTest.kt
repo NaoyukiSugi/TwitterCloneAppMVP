@@ -1,9 +1,8 @@
 package com.example.twittercloneappmvp.feature.home.view
 
 import android.view.ViewGroup
-import com.example.common_api.home_timeline.Tweet
+import com.example.twittercloneappmvp.model.Tweet
 import org.junit.jupiter.api.BeforeEach
-
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*

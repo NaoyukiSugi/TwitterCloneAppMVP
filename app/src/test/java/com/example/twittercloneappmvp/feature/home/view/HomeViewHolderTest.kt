@@ -1,9 +1,9 @@
 package com.example.twittercloneappmvp.feature.home.view
 
 import android.view.View
-import com.example.common_api.home_timeline.Tweet
-import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -14,7 +14,7 @@ class HomeViewHolderTest {
     private lateinit var viewHolder: HomeViewHolder
     private val view: View = mock()
     private val viewProxy: HomeContract.ViewHolderViewProxy = mock()
-    private val user = ResponseUser(
+    private val user = User(
         id = 1L,
         name = "name",
         screenName = "screenName",

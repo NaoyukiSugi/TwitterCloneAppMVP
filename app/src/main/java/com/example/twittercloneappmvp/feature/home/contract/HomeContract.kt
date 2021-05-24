@@ -1,9 +1,9 @@
 package com.example.twittercloneappmvp.feature.home.contract
 
 import android.widget.SearchView
-import com.example.common_api.home_timeline.Tweet
-import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.model.Future
+import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface HomeContract {
@@ -37,11 +37,11 @@ interface HomeContract {
         fun setName(name: String)
         fun setScreenName(screenName: String)
         fun setText(text: String)
-        fun setOnClickListener(user: ResponseUser, listener: IconClickListener?)
+        fun setOnClickListener(user: User, listener: IconClickListener?)
     }
 
     interface IconClickListener {
-        fun onIconClick(user: ResponseUser)
+        fun onIconClick(user: User)
     }
 
     interface Presenter {

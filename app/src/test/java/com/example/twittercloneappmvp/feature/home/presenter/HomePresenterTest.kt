@@ -2,8 +2,9 @@ package com.example.twittercloneappmvp.feature.home.presenter
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.example.common_api.home_timeline.Tweet
+import com.example.common_api.home_timeline.ResponseTweet
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -103,7 +104,7 @@ internal class HomePresenterTest {
     @Test
     fun `getHomeTimeline should only show emptyView when result data is empty`() {
         runBlockingTest {
-            val mockResult = NetworkResult.Success(emptyList<Tweet>())
+            val mockResult = NetworkResult.Success(emptyList<ResponseTweet>())
             doReturn(mockResult).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
