@@ -98,9 +98,6 @@ class HomeRepositoryTest {
     @Test
     fun `getHomeTimeline should emit Proceeding when starting`() {
         runBlocking {
-            val response: Response<List<ResponseTweet>> = mock {}
-            doReturn(response).whenever(api).getHomeTimeline()
-
             val result = repository.getHomeTimeline().first()
 
             assertTrue(result is Future.Proceeding)
