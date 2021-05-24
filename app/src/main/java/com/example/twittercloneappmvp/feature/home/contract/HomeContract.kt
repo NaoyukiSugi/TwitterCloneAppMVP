@@ -26,6 +26,7 @@ interface HomeContract {
         fun setOnRefreshListener(listener: RefreshListener)
         fun setOnQueryTextListener(listener: SearchView.OnQueryTextListener)
         fun navigateToSearchResult(searchQuery: String)
+        fun navigateToProfile(user: User)
     }
 
     interface RefreshListener {

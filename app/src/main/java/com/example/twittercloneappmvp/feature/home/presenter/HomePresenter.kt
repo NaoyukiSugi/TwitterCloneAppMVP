@@ -93,7 +93,7 @@ class HomePresenter @Inject constructor(
     }
 
     override fun onIconClick(user: User) {
-        TODO("Not yet implemented")
+        viewProxy.navigateToProfile(user)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
