@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.common_api.home_timeline.Tweet
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Tweet
 
 class HomeAdapter : ListAdapter<Tweet, HomeViewHolder>(DIFF_CALLBACK) {
 

@@ -3,7 +3,7 @@ package com.example.common_api.home_timeline
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Tweet(
+data class ResponseTweet(
     @SerializedName("id")
     val id: Long,
     @SerializedName("created_at")

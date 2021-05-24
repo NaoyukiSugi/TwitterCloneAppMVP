@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface HomeTimelineApi {
     @GET("1.1/statuses/home_timeline.json")
-    suspend fun getHomeTimeline(): Response<List<Tweet>>
+    suspend fun getHomeTimeline(): Response<List<ResponseTweet>>
 }
