@@ -2,14 +2,19 @@ package com.example.twittercloneappmvp.feature.home.repository
 
 import com.example.common_api.home_timeline.HomeTimelineApi
 import com.example.common_api.home_timeline.Tweet
-import com.example.twittercloneappmvp.util.NetworkResult
+import com.example.twittercloneappmvp.model.Future
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import retrofit2.HttpException
 import retrofit2.Response
 
 class HomeRepositoryTest {
@@ -22,37 +27,78 @@ class HomeRepositoryTest {
         repository = HomeRepository(api)
     }
 
+    // region getHomeTimeline
     @Test
-    fun `getHomeTimeline should return Success when response is successful`() {
+    fun `getHomeTimeline should call getHomeTimeline of api`() {
         runBlocking {
-            val tweetList: List<Tweet> = mock()
+            val response: Response<List<Tweet>> = mock()
+            doReturn(response).whenever(api).getHomeTimeline()
+
+            val result = repository.getHomeTimeline()
+
+            result.collect {
+                verify(api).getHomeTimeline()
+            }
+        }
+    }
+
+    @Test
+    fun `getHomeTimeline should emit Success when response is successful`() {
+        runBlocking {
+            val mockedTweetList: List<Tweet> = mock()
             val response: Response<List<Tweet>> = mock {
                 on { isSuccessful } doReturn true
-                on { body() } doReturn tweetList
+                on { body() } doReturn mockedTweetList
             }
             doReturn(response).whenever(api).getHomeTimeline()
 
             val result = repository.getHomeTimeline()
 
-            assertTrue(result is NetworkResult.Success<List<Tweet>>)
-            assertEquals(tweetList, result.data)
+            result.collect {
+                it.transform { tweetList ->
+                    assertEquals(mockedTweetList, tweetList)
+                }
+            }
         }
     }
 
     @Test
-    fun `getHomeTimeline should return Error when response is not successful`() {
+    fun `getHomeTimeline should emit Error of HttpException when response is not successful`() {
         runBlocking {
-            val message = "message"
             val response: Response<List<Tweet>> = mock {
                 on { isSuccessful } doReturn false
-                on { message() } doReturn message
             }
             doReturn(response).whenever(api).getHomeTimeline()
 
             val result = repository.getHomeTimeline()
 
-            assertTrue(result is NetworkResult.Error<List<Tweet>>)
-            assertEquals(message, result.message)
+            result.catch { error ->
+                assertTrue(error is HttpException)
+            }
         }
     }
+
+    @Test
+    fun `getHomeTimeline should emit Error of NullPointerException when response is null`() {
+        runBlocking {
+            val result = repository.getHomeTimeline()
+
+            result.catch { error ->
+                assertTrue(error is NullPointerException)
+            }
+        }
+    }
+
+    @Test
+    fun `getHomeTimeline should emit Proceeding when starting`() {
+        runBlocking {
+            val response: Response<List<Tweet>> = mock {}
+            doReturn(response).whenever(api).getHomeTimeline()
+
+            val result = repository.getHomeTimeline().first()
+
+            assertTrue(result is Future.Proceeding)
+        }
+    }
+    // endregion
 }
