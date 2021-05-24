@@ -7,10 +7,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.common_api.home_timeline.ResponseUser
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Future
 import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,33 +45,46 @@ class HomePresenter @Inject constructor(
 
     override fun getHomeTimeline() {
         launch {
-            viewProxy.showLoadingView()
-            when (val result = repository.getHomeTimeline()) {
-                is NetworkResult.Success -> {
-                    if (result.data != null && result.data.isNotEmpty()) {
-                        viewProxy.run {
-                            hideErrorView()
-                            hideEmptyView()
-                            showRecyclerView()
-                            submitList(result.data)
+            repository.getHomeTimeline()
+                .collect {
+                    when (it) {
+                        is Future.Proceeding -> {
+                            viewProxy.run {
+                                showLoadingView()
+                                hideErrorView()
+                                hideEmptyView()
+                                hideRecyclerView()
+                            }
                         }
-                    } else {
-                        viewProxy.run {
-                            hideRecyclerView()
-                            hideErrorView()
-                            showEmptyView()
+                        is Future.Success -> {
+                            viewProxy.hideLoadingView()
+                            it.transform { tweets ->
+                                if (tweets.isNotEmpty()) {
+                                    viewProxy.run {
+                                        hideErrorView()
+                                        hideEmptyView()
+                                        showRecyclerView()
+                                        submitList(tweets)
+                                    }
+                                } else {
+                                    viewProxy.run {
+                                        hideRecyclerView()
+                                        hideErrorView()
+                                        showEmptyView()
+                                    }
+                                }
+                            }
+                        }
+                        is Future.Error -> {
+                            viewProxy.run {
+                                hideLoadingView()
+                                hideRecyclerView()
+                                hideEmptyView()
+                                showErrorView()
+                            }
                         }
                     }
                 }
-                is NetworkResult.Error -> {
-                    viewProxy.run {
-                        hideRecyclerView()
-                        hideEmptyView()
-                        showErrorView()
-                    }
-                }
-            }
-            viewProxy.hideLoadingView()
         }
     }
 

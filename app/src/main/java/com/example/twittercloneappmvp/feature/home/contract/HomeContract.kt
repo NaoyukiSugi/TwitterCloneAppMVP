@@ -3,11 +3,12 @@ package com.example.twittercloneappmvp.feature.home.contract
 import android.widget.SearchView
 import com.example.common_api.home_timeline.Tweet
 import com.example.common_api.home_timeline.ResponseUser
-import com.example.twittercloneappmvp.util.NetworkResult
+import com.example.twittercloneappmvp.model.Future
+import kotlinx.coroutines.flow.Flow
 
 interface HomeContract {
     interface Repository {
-        suspend fun getHomeTimeline(): NetworkResult<List<Tweet>>
+        fun getHomeTimeline(): Flow<Future<List<Tweet>>>
     }
 
     interface ViewProxy {
