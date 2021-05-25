@@ -18,13 +18,13 @@ class SearchResultPagingSource(
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Tweet> {
         return runCatching {
-            val response =
+            val apiResponse =
                 api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-            if (!response.isSuccessful) throw HttpException(response)
+            if (!apiResponse.isSuccessful) throw HttpException(apiResponse)
             LoadResult.Page(
-                data = convertToTweet(response.body()!!),
+                data = convertToTweet(apiResponse.body()!!),
                 prevKey = null,
-                nextKey = response.body()!!.meta.nextToken
+                nextKey = apiResponse.body()!!.meta.nextToken
             )
         }.getOrElse {
             LoadResult.Error(it)
