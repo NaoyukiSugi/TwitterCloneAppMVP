@@ -52,7 +52,7 @@ class SearchResultPagingSource(
                     user = User(
                         id = responseUser.id,
                         name = responseUser.name,
-                        screenName = responseUser.screenName,
+                        screenName = responseUser.userName,
                         description = responseUser.description,
                         profileImageUrlHttps = responseUser.profileImageUrlHttps
                     )
