@@ -3,13 +3,13 @@ package com.example.twittercloneappmvp.feature.search_result.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
 
-class SearchResultAdapter : ListAdapter<Tweet, SearchResultViewHolder>(DIFF_CALLBACK) {
+class SearchResultAdapter : PagingDataAdapter<Tweet, SearchResultViewHolder>(DIFF_CALLBACK) {
 
     var listener: SearchResultContract.IconClickListener? = null
 
@@ -19,7 +19,7 @@ class SearchResultAdapter : ListAdapter<Tweet, SearchResultViewHolder>(DIFF_CALL
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         getTweet(position)?.run { holder.bind(this, listener) }
     }
-    
+
     @VisibleForTesting
     internal fun createSearchResultViewHolder(parent: ViewGroup): SearchResultViewHolder {
         val view = LayoutInflater.from(parent.context)
