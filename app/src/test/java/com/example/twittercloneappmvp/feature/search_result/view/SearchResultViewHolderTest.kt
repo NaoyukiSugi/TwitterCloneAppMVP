@@ -17,7 +17,7 @@ class SearchResultViewHolderTest {
     private val user = User(
         id = 1L,
         name = "name",
-        screenName = "screenName",
+        userName = "userName",
         description = "description",
         profileImageUrlHttps = "profileImageUrlHttps"
     )
@@ -49,10 +49,10 @@ class SearchResultViewHolderTest {
     }
 
     @Test
-    fun `bind should call setScreenName`() {
+    fun `bind should call setUserName`() {
         viewHolder.bind(tweet, listener)
 
-        verify(viewProxy).setScreenName(tweet.user.screenName)
+        verify(viewProxy).setUserName(tweet.user.userName)
     }
 
     @Test

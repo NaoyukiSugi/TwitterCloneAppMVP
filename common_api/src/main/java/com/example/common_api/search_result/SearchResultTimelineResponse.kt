@@ -33,11 +33,11 @@ data class ResponseUser(
     val id: Long,
     @SerializedName("name")
     val name: String,
-    @SerializedName("screen_name")
-    val screenName: String,
+    @SerializedName("username")
+    val userName: String,
     @SerializedName(value = "description", alternate = ["username"])
     val description: String,
-    @SerializedName(value = "profile_image_url_https", alternate = ["profile_image_url"])
+    @SerializedName("profile_image_url")
     val profileImageUrlHttps: String,
 ) : Serializable
 

@@ -36,7 +36,7 @@ interface HomeContract {
     interface ViewHolderViewProxy {
         fun loadImageToView(imageUrl: String)
         fun setName(name: String)
-        fun setScreenName(screenName: String)
+        fun setUserName(userName: String)
         fun setText(text: String)
         fun setOnClickListener(user: User, listener: IconClickListener?)
     }

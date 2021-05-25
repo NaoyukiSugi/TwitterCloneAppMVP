@@ -20,7 +20,7 @@ class SearchResultViewHolder(
         viewProxy.run {
             loadImageToView(tweet.user.profileImageUrlHttps)
             setName(tweet.user.name)
-            setScreenName(tweet.user.screenName)
+            setUserName(tweet.user.userName)
             setText(tweet.text)
             setOnClickListener(tweet.user, listener)
         }
@@ -32,13 +32,13 @@ class SearchResultViewHolder(
     ) : SearchResultContract.ViewHolderViewProxy {
 
         private val iconIv: ImageView
-            get() = view.findViewById(R.id.user_icon)
+            get() = view.findViewById(R.id.icon)
 
         private val nameTv: TextView
-            get() = view.findViewById(R.id.user_name)
+            get() = view.findViewById(R.id.name)
 
-        private val screenNameTv: TextView
-            get() = view.findViewById(R.id.user_screen_name)
+        private val userNameTv: TextView
+            get() = view.findViewById(R.id.user_name)
 
         private val textTv: TextView
             get() = view.findViewById(R.id.tweet_text)
@@ -51,8 +51,8 @@ class SearchResultViewHolder(
             nameTv.text = name
         }
 
-        override fun setScreenName(screenName: String) {
-            screenNameTv.text = screenName
+        override fun setUserName(userName: String) {
+            userNameTv.text = userName
         }
 
         override fun setText(text: String) {

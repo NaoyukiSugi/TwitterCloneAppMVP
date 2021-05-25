@@ -36,7 +36,7 @@ class HomeRepository @Inject constructor(
             user = User(
                 id = responseTweet.user.id,
                 name = responseTweet.user.name,
-                screenName = responseTweet.user.screenName,
+                userName = responseTweet.user.screenName,
                 description = responseTweet.user.description,
                 profileImageUrlHttps = responseTweet.user.profileImageUrlHttps
             )
