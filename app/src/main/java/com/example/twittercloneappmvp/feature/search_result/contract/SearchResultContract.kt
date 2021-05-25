@@ -31,7 +31,7 @@ interface SearchResultContract {
 
     interface ViewProxy {
         fun initAdapter()
-        fun submitList(tweets: List<Tweet>)
+        suspend fun submitData(tweets: PagingData<Tweet>)
         fun showRecyclerView()
         fun hideRecyclerView()
         fun showErrorView()

@@ -6,6 +6,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
@@ -38,8 +39,8 @@ class SearchResultViewProxy(private val fragment: Fragment) : SearchResultContra
         }
     }
 
-    override fun submitList(tweets: List<Tweet>) {
-        searchResultAdapter.submitList(tweets)
+    override suspend fun submitData(tweets: PagingData<Tweet>) {
+        searchResultAdapter.submitData(tweets)
     }
 
     override fun showRecyclerView() {
