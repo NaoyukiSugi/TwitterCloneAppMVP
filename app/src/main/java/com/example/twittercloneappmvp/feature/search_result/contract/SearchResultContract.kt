@@ -7,10 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchResultContract {
     interface Repository {
-        fun getSearchResultTimeline(
-            searchQuery: String,
-            nextToken: String?
-        ): Flow<PagingData<Tweet>>
+        fun getSearchResultTimeline(searchQuery: String): Flow<PagingData<Tweet>>
     }
 
     interface ViewHolderViewProxy {
