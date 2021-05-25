@@ -29,6 +29,7 @@ class SearchResultPresenter(
             initAdapter()
             setOnIconClickListener(this@SearchResultPresenter)
             setOnRefreshListener(this@SearchResultPresenter)
+            addLoadStateListener()
         }
     }
 

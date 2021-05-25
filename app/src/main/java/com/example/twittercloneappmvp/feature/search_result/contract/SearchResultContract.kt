@@ -39,6 +39,7 @@ interface SearchResultContract {
         fun hideLoadingView()
         fun setOnIconClickListener(listener: IconClickListener)
         fun setOnRefreshListener(listener: RefreshListener)
+        fun addLoadStateListener()
     }
 
     interface Presenter {
