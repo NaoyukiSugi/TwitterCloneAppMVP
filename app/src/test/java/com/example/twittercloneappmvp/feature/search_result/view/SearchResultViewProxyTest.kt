@@ -5,10 +5,12 @@ import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -48,12 +50,14 @@ internal class SearchResultViewProxyTest {
 
     @Test
     fun `submitList should call submitList of adapter`() {
-        val tweets: List<Tweet> = mock()
-        viewProxy.searchResultAdapter = adapter
+        runBlocking {
+            val tweets: PagingData<Tweet> = mock()
+            viewProxy.searchResultAdapter = adapter
 
-        viewProxy.submitList(tweets)
+            viewProxy.submitData(tweets)
 
-        verify(adapter).submitList(tweets)
+            verify(adapter).submitData(tweets)
+        }
     }
 
     @Test
