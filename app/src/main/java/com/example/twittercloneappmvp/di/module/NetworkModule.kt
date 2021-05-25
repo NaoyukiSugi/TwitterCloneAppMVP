@@ -51,7 +51,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHomeTimelineApi(@RetrofitForNewApi retrofit: Retrofit): HomeTimelineApi =
+    fun provideHomeTimelineApi(@RetrofitForOldApi retrofit: Retrofit): HomeTimelineApi =
         retrofit.create(HomeTimelineApi::class.java)
     // endregion
 

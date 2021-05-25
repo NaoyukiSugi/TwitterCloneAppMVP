@@ -35,7 +35,7 @@ class HomeModule {
 
     @Provides
     @FragmentScoped
-    fun providePresenter(
+    fun provideHomePresenter(
         viewProxy: HomeContract.ViewProxy,
         repository: HomeContract.Repository,
         lifecycleOwner: LifecycleOwner

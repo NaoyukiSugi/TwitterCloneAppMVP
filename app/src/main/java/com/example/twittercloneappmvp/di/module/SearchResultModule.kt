@@ -20,11 +20,11 @@ import dagger.hilt.android.scopes.FragmentScoped
 class SearchResultModule {
 
     @Provides
-    fun provideHomeFragment(fragment: Fragment): SearchResultFragment =
+    fun provideSearchResultFragment(fragment: Fragment): SearchResultFragment =
         fragment as SearchResultFragment
 
-    @Provides
-    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
+//    @Provides
+//    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
 
     @Provides
     @Reusable
