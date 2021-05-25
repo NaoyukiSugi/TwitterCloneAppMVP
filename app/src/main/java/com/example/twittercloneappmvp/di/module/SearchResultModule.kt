@@ -3,6 +3,7 @@ package com.example.twittercloneappmvp.di.module
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.search_result.SearchResultTimelineApi
+import com.example.twittercloneappmvp.di.annotation.LifecycleOwnerForSearchResult
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.feature.search_result.fragment.SearchResultFragment
 import com.example.twittercloneappmvp.feature.search_result.presenter.SearchResultPresenter
@@ -23,8 +24,10 @@ class SearchResultModule {
     fun provideSearchResultFragment(fragment: Fragment): SearchResultFragment =
         fragment as SearchResultFragment
 
-//    @Provides
-//    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
+    @Provides
+    @LifecycleOwnerForSearchResult
+    fun provideSearchResultLifecycleOwner(fragment: Fragment): LifecycleOwner =
+        fragment
 
     @Provides
     @Reusable
@@ -41,6 +44,6 @@ class SearchResultModule {
     fun provideSearchResultPresenter(
         viewProxy: SearchResultContract.ViewProxy,
         repository: SearchResultContract.Repository,
-        lifecycleOwner: LifecycleOwner
+        @LifecycleOwnerForSearchResult lifecycleOwner: LifecycleOwner
     ): SearchResultContract.Presenter = SearchResultPresenter(viewProxy, repository, lifecycleOwner)
 }
