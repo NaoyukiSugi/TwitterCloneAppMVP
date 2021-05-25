@@ -7,10 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchResultContract {
     interface Repository {
-        fun getSearchResultTimeline(
-            searchQuery: String,
-            nextToken: String?
-        ): Flow<PagingData<Tweet>>
+        fun getSearchResultTimeline(searchQuery: String): Flow<PagingData<Tweet>>
     }
 
     interface ViewHolderViewProxy {
@@ -31,7 +28,7 @@ interface SearchResultContract {
 
     interface ViewProxy {
         fun initAdapter()
-        fun submitList(tweets: List<Tweet>)
+        suspend fun submitData(tweets: PagingData<Tweet>)
         fun showRecyclerView()
         fun hideRecyclerView()
         fun showErrorView()
@@ -45,7 +42,7 @@ interface SearchResultContract {
     }
 
     interface Presenter {
-        fun getSearchResultTimeline()
+        fun getSearchResultTimeline(searchQuery: String)
     }
 
 }

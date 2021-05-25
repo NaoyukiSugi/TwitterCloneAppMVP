@@ -9,6 +9,8 @@ import com.example.twittercloneappmvp.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class SearchResultPresenter(
     private val viewProxy: SearchResultContract.ViewProxy,
@@ -33,8 +35,12 @@ class SearchResultPresenter(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onLifecycleEventOnDestroy() = cancel()
 
-    override fun getSearchResultTimeline() {
-        TODO("Not yet implemented")
+    override fun getSearchResultTimeline(searchQuery: String) {
+        launch {
+            repository.getSearchResultTimeline(searchQuery).collect {
+                viewProxy.submitData(it)
+            }
+        }
     }
 
     override fun onIconClick(user: User) {
