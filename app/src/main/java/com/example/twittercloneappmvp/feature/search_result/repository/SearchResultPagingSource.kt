@@ -7,25 +7,16 @@ import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
-import retrofit2.HttpException
-import java.lang.Exception
 
 class SearchResultPagingSource(
     private val api: SearchResultTimelineApi,
     private val searchQuery: String
 ) : PagingSource<String, Tweet>() {
 
-    override fun getRefreshKey(state: PagingState<String, Tweet>): String? {
-//        return state.anchorPosition?.let { anchorPosition ->
-//            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-//                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.plus(-1)
-//        }
-        return null
-    }
+    override fun getRefreshKey(state: PagingState<String, Tweet>): String? = null
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Tweet> {
-
-        return kotlin.runCatching {
+        return runCatching {
             val response =
                 api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
             LoadResult.Page(
@@ -36,22 +27,6 @@ class SearchResultPagingSource(
         }.getOrElse {
             LoadResult.Error(it)
         }
-
-//        return try {
-//            val response =
-//                api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-//            if (response.isSuccessful) {
-//                LoadResult.Page(
-//                    data = convertToTweet(response.body()!!),
-//                    prevKey = null,
-//                    nextKey = response.body()!!.meta.nextToken
-//                )
-//            } else {
-//                throw HttpException(response)
-//            }
-//        } catch (e: Exception) {
-//            LoadResult.Error(e)
-//        }
     }
 
     @VisibleForTesting
