@@ -19,12 +19,12 @@ class SearchResultViewHolderViewProxyTest {
     private val requestManager: RequestManager = mock()
     private val iconIv: ImageView = mock()
     private val nameTv: TextView = mock()
-    private val screenNameTv: TextView = mock()
+    private val userNameTv: TextView = mock()
     private val textTv: TextView = mock()
     private val view: View = mock {
-        on { findViewById<ImageView>(R.id.user_icon) } doReturn iconIv
-        on { findViewById<TextView>(R.id.user_name) } doReturn nameTv
-        on { findViewById<TextView>(R.id.user_screen_name) } doReturn screenNameTv
+        on { findViewById<ImageView>(R.id.icon) } doReturn iconIv
+        on { findViewById<TextView>(R.id.name) } doReturn nameTv
+        on { findViewById<TextView>(R.id.user_name) } doReturn userNameTv
         on { findViewById<TextView>(R.id.tweet_text) } doReturn textTv
     }
 
@@ -54,12 +54,12 @@ class SearchResultViewHolderViewProxyTest {
     }
 
     @Test
-    fun `setScreenName should set screenName into screenNameTv`() {
-        val screenName = "screenNameTv"
+    fun `setUserName should set userName into userNameTv`() {
+        val userName = "userName"
 
-        viewProxy.setScreenName(screenName)
+        viewProxy.setUserName(userName)
 
-        verify(screenNameTv).text = screenName
+        verify(userNameTv).text = userName
     }
 
     @Test
