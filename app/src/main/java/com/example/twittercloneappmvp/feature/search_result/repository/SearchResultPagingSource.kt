@@ -7,6 +7,7 @@ import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
+import retrofit2.HttpException
 
 class SearchResultPagingSource(
     private val api: SearchResultTimelineApi,
@@ -19,6 +20,7 @@ class SearchResultPagingSource(
         return runCatching {
             val response =
                 api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
+            if (!response.isSuccessful) throw HttpException(response)
             LoadResult.Page(
                 data = convertToTweet(response.body()!!),
                 prevKey = null,
