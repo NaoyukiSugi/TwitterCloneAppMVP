@@ -3,6 +3,7 @@ package com.example.twittercloneappmvp.di.module
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.HomeTimelineApi
+import com.example.twittercloneappmvp.di.annotation.LifecycleOwnerForHome
 import com.example.twittercloneappmvp.feature.home.fragment.HomeFragment
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.feature.home.presenter.HomePresenter
@@ -23,7 +24,8 @@ class HomeModule {
     fun provideHomeFragment(fragment: Fragment): HomeFragment = fragment as HomeFragment
 
     @Provides
-    fun provideLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
+    @LifecycleOwnerForHome
+    fun provideHomeLifecycleOwner(fragment: Fragment): LifecycleOwner = fragment
 
     @Provides
     @Reusable
@@ -35,9 +37,9 @@ class HomeModule {
 
     @Provides
     @FragmentScoped
-    fun providePresenter(
+    fun provideHomePresenter(
         viewProxy: HomeContract.ViewProxy,
         repository: HomeContract.Repository,
-        lifecycleOwner: LifecycleOwner
+        @LifecycleOwnerForHome lifecycleOwner: LifecycleOwner
     ): HomeContract.Presenter = HomePresenter(viewProxy, repository, lifecycleOwner)
 }

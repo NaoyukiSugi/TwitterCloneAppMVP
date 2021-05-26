@@ -13,8 +13,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchResultPresenter(
+class SearchResultPresenter @Inject constructor(
     private val viewProxy: SearchResultContract.ViewProxy,
     private val repository: SearchResultContract.Repository,
     lifecycleOwner: LifecycleOwner
