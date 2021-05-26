@@ -44,7 +44,7 @@ interface SearchResultContract {
     }
 
     interface Presenter {
-        fun getSearchResultTimeline()
+        fun getSearchResultTimeline(searchQuery: String)
     }
 
     interface LoadStateListener {

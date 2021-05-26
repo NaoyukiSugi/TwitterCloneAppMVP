@@ -4,17 +4,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
+import com.example.twittercloneappmvp.model.Tweet
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.spy
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.*
 import kotlin.test.assertFalse
 
 internal class SearchResultPresenterTest {
@@ -59,6 +61,22 @@ internal class SearchResultPresenterTest {
         presenter.onLifecycleEventOnDestroy()
 
         assertFalse(presenter.isActive)
+    }
+
+    @Test
+    fun `getSearchResultTimeline should submit pagingData passed from repository`() {
+        runBlocking {
+            val searchQuery = "searchQuery"
+            val pagingDataFLow: Flow<PagingData<Tweet>> = mock()
+            doReturn(pagingDataFLow).whenever(repository).getSearchResultTimeline(searchQuery)
+
+            presenter.getSearchResultTimeline(searchQuery)
+
+            verify(repository).getSearchResultTimeline(searchQuery)
+            pagingDataFLow.collect {
+                verify(viewProxy).submitData(it)
+            }
+        }
     }
 
     // region onLoadState
