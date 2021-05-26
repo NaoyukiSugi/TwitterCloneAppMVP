@@ -8,34 +8,24 @@ import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
 import retrofit2.HttpException
-import java.lang.Exception
 
 class SearchResultPagingSource(
     private val api: SearchResultTimelineApi,
     private val searchQuery: String
 ) : PagingSource<String, Tweet>() {
 
-    override fun getRefreshKey(state: PagingState<String, Tweet>): String? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey
-        }
-    }
+    override fun getRefreshKey(state: PagingState<String, Tweet>): String? = null
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Tweet> {
-        return try {
-            val response =
-                api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-            if (response.isSuccessful) {
-                LoadResult.Page(
-                    data = convertToTweet(response.body()!!),
-                    prevKey = null,
-                    nextKey = response.body()!!.meta.nextToken
-                )
-            } else {
-                throw HttpException(response)
-            }
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+        return runCatching {
+            val response = fetch(searchQuery, params.key)
+            LoadResult.Page(
+                data = convertToTweet(response),
+                prevKey = null,
+                nextKey = response.meta.nextToken
+            )
+        }.getOrElse {
+            LoadResult.Error(it)
         }
     }
 
@@ -59,5 +49,16 @@ class SearchResultPagingSource(
                 )
             }
         }
+    }
+
+    @VisibleForTesting
+    internal suspend fun fetch(
+        searchQuery: String,
+        nextToken: String?
+    ): SearchResultTimelineResponse {
+        val apiResponse =
+            api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+        if (apiResponse.isSuccessful) return apiResponse.body()!!
+        else throw HttpException(apiResponse)
     }
 }
