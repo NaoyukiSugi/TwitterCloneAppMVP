@@ -6,6 +6,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
@@ -81,6 +83,10 @@ class SearchResultViewProxy(private val fragment: Fragment) : SearchResultContra
 
     override fun setOnRefreshListener(listener: SearchResultContract.RefreshListener) {
         refreshButton?.setOnClickListener { listener.onRefresh() }
+    }
+
+    override fun addLoadStateListener(listener: SearchResultContract.LoadStateListener) {
+        searchResultAdapter.addLoadStateListener { listener.onLoadState() }
     }
 
     @VisibleForTesting
