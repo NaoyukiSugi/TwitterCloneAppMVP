@@ -35,7 +35,7 @@ data class ResponseUser(
     val name: String,
     @SerializedName("username")
     val userName: String,
-    @SerializedName(value = "description", alternate = ["username"])
+    @SerializedName(value = "description")
     val description: String,
     @SerializedName("profile_image_url")
     val profileImageUrlHttps: String,

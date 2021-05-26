@@ -8,8 +8,9 @@ import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
-class SearchResultRepository(
+class SearchResultRepository @Inject constructor(
     private val api: SearchResultTimelineApi
 ) : SearchResultContract.Repository {
 

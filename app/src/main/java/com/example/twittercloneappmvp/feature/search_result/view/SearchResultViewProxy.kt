@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
+import javax.inject.Inject
 
-class SearchResultViewProxy(private val fragment: Fragment) : SearchResultContract.ViewProxy {
+class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) :
+    SearchResultContract.ViewProxy {
 
     @VisibleForTesting
     internal lateinit var searchResultAdapter: SearchResultAdapter
