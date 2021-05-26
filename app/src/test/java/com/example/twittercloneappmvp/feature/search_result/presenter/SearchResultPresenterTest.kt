@@ -78,7 +78,7 @@ internal class SearchResultPresenterTest {
     @Test
     fun `onLoadState should only show loadingView when LoadState is Loading`() {
         val loadState: CombinedLoadStates = mock {
-            on { refresh } doReturn LoadState.NotLoading(false)
+            on { refresh } doReturn LoadState.Loading
         }
 
         presenter.onLoadState(loadState)
@@ -92,7 +92,7 @@ internal class SearchResultPresenterTest {
     @Test
     fun `onLoadState should only show errorView when LoadState is Error`() {
         val loadState: CombinedLoadStates = mock {
-            on { refresh } doReturn LoadState.NotLoading(false)
+            on { refresh } doReturn LoadState.Error(mock())
         }
 
         presenter.onLoadState(loadState)
