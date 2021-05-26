@@ -7,6 +7,8 @@ import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
@@ -39,6 +41,10 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
             searchResultAdapter = this
             recyclerView?.adapter = this
         }
+    }
+
+    override fun initRecyclerView() {
+        recyclerView?.run { addItemDecoration(createItemDecoration()) }
     }
 
     override suspend fun submitData(tweets: PagingData<Tweet>) {
@@ -91,4 +97,11 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
 
     @VisibleForTesting
     internal fun createSearchResultAdapter() = SearchResultAdapter()
+
+    @VisibleForTesting
+    internal fun createItemDecoration(): RecyclerView.ItemDecoration =
+        DividerItemDecoration(fragment.context, LinearLayoutManager(fragment.context).orientation)
+            .apply {
+                fragment.context?.getDrawable(R.drawable.divider)?.let { setDrawable(it) }
+            }
 }

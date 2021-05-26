@@ -29,6 +29,7 @@ interface SearchResultContract {
 
     interface ViewProxy {
         fun initAdapter()
+        fun initRecyclerView()
         suspend fun submitData(tweets: PagingData<Tweet>)
         fun showRecyclerView()
         fun hideRecyclerView()

@@ -1,5 +1,7 @@
 package com.example.twittercloneappmvp.feature.search_result.view
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import androidx.core.view.isVisible
@@ -31,8 +33,13 @@ internal class SearchResultViewProxyTest {
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
     }
+    private val drawable: Drawable = mock()
+    private val context: Context = mock {
+        on { getDrawable(R.drawable.divider) } doReturn drawable
+    }
     private val fragment: Fragment = mock {
         on { view } doReturn view
+        on { context } doReturn context
     }
     private val adapter: SearchResultAdapter = mock()
 
@@ -47,6 +54,15 @@ internal class SearchResultViewProxyTest {
         viewProxy.initAdapter()
 
         verify(recyclerView).adapter = adapter
+    }
+
+    @Test
+    fun `initRecyclerView should call addItemDecoration`() {
+        viewProxy.initRecyclerView()
+        val itemDecoration: RecyclerView.ItemDecoration = mock()
+        doReturn(itemDecoration).whenever(viewProxy).createItemDecoration()
+
+        verify(recyclerView).addItemDecoration(itemDecoration)
     }
 
     @Test
