@@ -14,8 +14,12 @@ class SearchResultPresenter(
     private val viewProxy: SearchResultContract.ViewProxy,
     private val repository: SearchResultContract.Repository,
     lifecycleOwner: LifecycleOwner
-) : SearchResultContract.Presenter, SearchResultContract.IconClickListener,
-    SearchResultContract.RefreshListener, LifecycleObserver, CoroutineScope by MainScope() {
+) : SearchResultContract.Presenter,
+    SearchResultContract.IconClickListener,
+    SearchResultContract.RefreshListener,
+    SearchResultContract.LoadStateListener,
+    LifecycleObserver,
+    CoroutineScope by MainScope() {
 
     init {
         lifecycleOwner.lifecycle.addObserver(this)
@@ -27,6 +31,7 @@ class SearchResultPresenter(
             initAdapter()
             setOnIconClickListener(this@SearchResultPresenter)
             setOnRefreshListener(this@SearchResultPresenter)
+            addLoadStateListener(this@SearchResultPresenter)
         }
     }
 
@@ -42,6 +47,10 @@ class SearchResultPresenter(
     }
 
     override fun onRefresh() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoadState() {
         TODO("Not yet implemented")
     }
 }

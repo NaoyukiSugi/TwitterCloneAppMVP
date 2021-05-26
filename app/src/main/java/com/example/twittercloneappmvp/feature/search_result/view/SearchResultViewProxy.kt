@@ -83,6 +83,10 @@ class SearchResultViewProxy(private val fragment: Fragment) : SearchResultContra
         refreshButton?.setOnClickListener { listener.onRefresh() }
     }
 
+    override fun addLoadStateListener(listener: SearchResultContract.LoadStateListener) {
+        searchResultAdapter.addLoadStateListener { listener.onLoadState() }
+    }
+
     @VisibleForTesting
     internal fun createSearchResultAdapter() = SearchResultAdapter()
 }
