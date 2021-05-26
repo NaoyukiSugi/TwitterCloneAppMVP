@@ -18,13 +18,11 @@ class SearchResultPagingSource(
 
     override suspend fun load(params: LoadParams<String>): LoadResult<String, Tweet> {
         return runCatching {
-            val apiResponse =
-                api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-            if (!apiResponse.isSuccessful) throw HttpException(apiResponse)
+            val response = fetch(searchQuery, params.key)
             LoadResult.Page(
-                data = convertToTweet(apiResponse.body()!!),
+                data = convertToTweet(response),
                 prevKey = null,
-                nextKey = apiResponse.body()!!.meta.nextToken
+                nextKey = response.meta.nextToken
             )
         }.getOrElse {
             LoadResult.Error(it)
@@ -51,5 +49,16 @@ class SearchResultPagingSource(
                 )
             }
         }
+    }
+
+    @VisibleForTesting
+    internal suspend fun fetch(
+        searchQuery: String,
+        nextToken: String?
+    ): SearchResultTimelineResponse {
+        val apiResponse =
+            api.getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+        if (apiResponse.isSuccessful) return apiResponse.body()!!
+        else throw HttpException(apiResponse)
     }
 }

@@ -1,9 +1,8 @@
 package com.example.twittercloneappmvp.feature.search_result.repository
 
-import androidx.paging.PagingSource
+import androidx.paging.PagingSource.*
 import androidx.paging.PagingState
 import com.example.common_api.search_result.ResponseMeta
-import com.example.common_api.search_result.ResponseTweet
 import com.example.common_api.search_result.SearchResultTimelineApi
 import com.example.common_api.search_result.SearchResultTimelineResponse
 import com.example.twittercloneappmvp.model.Tweet
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
+import retrofit2.HttpException
 import retrofit2.Response
 
 internal class SearchResultPagingSourceTest {
@@ -19,7 +19,9 @@ internal class SearchResultPagingSourceTest {
     private lateinit var pagingSource: SearchResultPagingSource
     private val api: SearchResultTimelineApi = mock()
     private val searchQuery = "searchQuery"
-    private val params: PagingSource.LoadParams<String> = mock()
+    private val nextToken = "nextToken"
+    private val params =
+        LoadParams.Refresh(key = nextToken, loadSize = 1, placeholdersEnabled = false)
 
     @BeforeEach
     fun setUp() {
@@ -37,38 +39,27 @@ internal class SearchResultPagingSourceTest {
 
     // region load
     @Test
-    fun `load should call getSearchResultTimeline of api`() {
-        runBlocking {
-            pagingSource.load(params)
-
-            verify(api).getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-        }
-    }
-
-    @Test
     fun `load should return LoadResult Page when response is successful`() {
         runBlocking {
-            val responseTweets: List<ResponseTweet> = mock()
-            val convertedTweets: List<Tweet> = mock()
-            val nextToken = "nextToken"
-            val response: SearchResultTimelineResponse = mock {
-                on { tweets } doReturn responseTweets
-                on { meta } doReturn ResponseMeta(nextToken)
-            }
+            val response = SearchResultTimelineResponse(
+                tweets = mock(),
+                meta = ResponseMeta(nextToken),
+                includes = mock()
+            )
             val apiResponse: Response<SearchResultTimelineResponse> = mock {
                 on { isSuccessful } doReturn true
                 on { body() } doReturn response
             }
-            doReturn(nextToken).whenever(params).key
-            doReturn(apiResponse)
-                .whenever(api)
-                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = params.key)
-            doReturn(convertedTweets).whenever(pagingSource).convertToTweet(response)
-            val page = PagingSource.LoadResult.Page(
+            val convertedTweets: List<Tweet> = mock()
+            val page = LoadResult.Page(
                 data = convertedTweets,
                 prevKey = null,
                 nextKey = response.meta.nextToken
             )
+            doReturn(apiResponse)
+                .whenever(api)
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+            doReturn(convertedTweets).whenever(pagingSource).convertToTweet(response)
 
             val result = pagingSource.load(params)
 
@@ -84,12 +75,50 @@ internal class SearchResultPagingSourceTest {
             }
             doReturn(apiResponse)
                 .whenever(api)
-                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = "nextToken")
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
 
             val result = pagingSource.load(params)
 
-            assertTrue(result is PagingSource.LoadResult.Error)
+            assertTrue(result is LoadResult.Error)
         }
     }
     // endregion
+
+    // region fetch
+    @Test
+    fun `fetch should return SearchResultTimelineResponse when response is successful`() {
+        runBlocking {
+            val response: SearchResultTimelineResponse = mock()
+            val apiResponse: Response<SearchResultTimelineResponse> = mock {
+                on { isSuccessful } doReturn true
+                on { body() } doReturn response
+            }
+            doReturn(apiResponse)
+                .whenever(api)
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+
+            val result = pagingSource.fetch(searchQuery, nextToken)
+
+            assertEquals(response, result)
+        }
+    }
+
+    @Test
+    fun `fetch should throw HttpException when response is not successful`() {
+        runBlocking {
+            val apiResponse: Response<SearchResultTimelineResponse> = mock {
+                on { isSuccessful } doReturn false
+            }
+            doReturn(apiResponse)
+                .whenever(api)
+                .getSearchResultTimeline(searchQuery = searchQuery, nextToken = nextToken)
+
+            runCatching {
+                pagingSource.fetch(searchQuery, nextToken)
+            }.getOrElse {
+                assertTrue(it is HttpException)
+            }
+        }
+    }
+    // end region
 }
