@@ -54,12 +54,12 @@ class SearchResultViewHolderViewProxyTest {
     }
 
     @Test
-    fun `setUserName should set userName into userNameTv`() {
+    fun `setUserName should set userName with @ into userNameTv`() {
         val userName = "userName"
 
         viewProxy.setUserName(userName)
 
-        verify(userNameTv).text = userName
+        verify(userNameTv).text = "@$userName"
     }
 
     @Test

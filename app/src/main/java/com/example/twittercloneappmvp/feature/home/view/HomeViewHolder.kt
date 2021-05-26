@@ -52,7 +52,7 @@ class HomeViewHolder(
         }
 
         override fun setUserName(userName: String) {
-            userNameTv.text = userName
+            userNameTv.text = USER_NAME_FORMAT.format(userName)
         }
 
         override fun setText(text: String) {
@@ -63,4 +63,9 @@ class HomeViewHolder(
             iconIv.setOnClickListener { listener?.onIconClick(user) }
         }
     }
+
+    private companion object {
+        const val USER_NAME_FORMAT = "@%s"
+    }
+
 }
