@@ -14,6 +14,7 @@ import kotlinx.coroutines.cancel
 
 class SearchResultPresenter(
     private val viewProxy: SearchResultContract.ViewProxy,
+    private val repository: SearchResultContract.Repository,
     lifecycleOwner: LifecycleOwner
 ) : SearchResultContract.Presenter,
     SearchResultContract.IconClickListener,

@@ -21,13 +21,14 @@ internal class SearchResultPresenterTest {
 
     private lateinit var presenter: SearchResultPresenter
     private val viewProxy: SearchResultContract.ViewProxy = mock()
+    private val repository: SearchResultContract.Repository = mock()
     private val lifecycle: Lifecycle = mock()
     private val lifecycleOwner: LifecycleOwner = mock { on { lifecycle } doReturn lifecycle }
 
     @BeforeEach
     fun setUp() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        presenter = spy(SearchResultPresenter(viewProxy, lifecycleOwner))
+        presenter = spy(SearchResultPresenter(viewProxy, repository, lifecycleOwner))
     }
 
     // region onLifecycleEventOnStart
