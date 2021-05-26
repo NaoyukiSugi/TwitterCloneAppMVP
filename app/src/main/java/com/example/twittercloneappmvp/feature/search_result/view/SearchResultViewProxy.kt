@@ -84,7 +84,7 @@ class SearchResultViewProxy(private val fragment: Fragment) : SearchResultContra
     }
 
     override fun addLoadStateListener(listener: SearchResultContract.LoadStateListener) {
-        searchResultAdapter.addLoadStateListener { listener.onLoadState() }
+        searchResultAdapter.addLoadStateListener { listener.onLoadState(it) }
     }
 
     @VisibleForTesting

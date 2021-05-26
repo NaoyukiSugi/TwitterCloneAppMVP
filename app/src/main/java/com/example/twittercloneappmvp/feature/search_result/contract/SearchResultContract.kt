@@ -1,5 +1,6 @@
 package com.example.twittercloneappmvp.feature.search_result.contract
 
+import androidx.paging.CombinedLoadStates
 import androidx.paging.PagingData
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
@@ -47,7 +48,6 @@ interface SearchResultContract {
     }
 
     interface LoadStateListener {
-        fun onLoadState()
+        fun onLoadState(loadState: CombinedLoadStates)
     }
-
 }

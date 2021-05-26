@@ -2,6 +2,8 @@ package com.example.twittercloneappmvp.feature.search_result.presenter
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -57,4 +59,48 @@ internal class SearchResultPresenterTest {
 
         assertFalse(presenter.isActive)
     }
+
+    // region onLoadState
+    @Test
+    fun `onLoadState should only show recyclerView when LoadState is NotLoading`() {
+        val loadState: CombinedLoadStates = mock {
+            on { refresh } doReturn LoadState.NotLoading(false)
+        }
+
+        presenter.onLoadState(loadState)
+
+        verify(viewProxy).showRecyclerView()
+        verify(viewProxy).hideEmptyView()
+        verify(viewProxy).hideErrorView()
+        verify(viewProxy).hideLoadingView()
+    }
+
+    @Test
+    fun `onLoadState should only show loadingView when LoadState is Loading`() {
+        val loadState: CombinedLoadStates = mock {
+            on { refresh } doReturn LoadState.Loading
+        }
+
+        presenter.onLoadState(loadState)
+
+        verify(viewProxy).showLoadingView()
+        verify(viewProxy).hideRecyclerView()
+        verify(viewProxy).hideEmptyView()
+        verify(viewProxy).hideErrorView()
+    }
+
+    @Test
+    fun `onLoadState should only show errorView when LoadState is Error`() {
+        val loadState: CombinedLoadStates = mock {
+            on { refresh } doReturn LoadState.Error(mock())
+        }
+
+        presenter.onLoadState(loadState)
+
+        verify(viewProxy).showErrorView()
+        verify(viewProxy).hideLoadingView()
+        verify(viewProxy).hideRecyclerView()
+        verify(viewProxy).hideEmptyView()
+    }
+    // endregion
 }

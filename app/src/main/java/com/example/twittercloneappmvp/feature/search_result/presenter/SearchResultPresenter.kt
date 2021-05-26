@@ -4,6 +4,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.User
 import kotlinx.coroutines.CoroutineScope
@@ -49,7 +51,32 @@ class SearchResultPresenter(
         TODO("Not yet implemented")
     }
 
-    override fun onLoadState() {
-        TODO("Not yet implemented")
+    override fun onLoadState(loadState: CombinedLoadStates) {
+        when (loadState.refresh) {
+            is LoadState.NotLoading -> {
+                viewProxy.run {
+                    showRecyclerView()
+                    hideEmptyView()
+                    hideErrorView()
+                    hideLoadingView()
+                }
+            }
+            LoadState.Loading -> {
+                viewProxy.run {
+                    showLoadingView()
+                    hideRecyclerView()
+                    hideEmptyView()
+                    hideErrorView()
+                }
+            }
+            is LoadState.Error -> {
+                viewProxy.run {
+                    showErrorView()
+                    hideLoadingView()
+                    hideRecyclerView()
+                    hideEmptyView()
+                }
+            }
+        }
     }
 }
