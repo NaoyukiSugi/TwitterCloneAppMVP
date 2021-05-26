@@ -5,6 +5,7 @@ import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.paging.CombinedLoadStates
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
@@ -142,10 +143,13 @@ internal class SearchResultViewProxyTest {
 
     @Test
     fun `addLoadStateListener should set listener into searchResultAdapter`() {
-        val listener: SearchResultContract.LoadStateListener = mock()
+        val loadStateListener: SearchResultContract.LoadStateListener = mock()
+        viewProxy.searchResultAdapter = adapter
 
-        viewProxy.addLoadStateListener(listener)
+        viewProxy.addLoadStateListener(loadStateListener)
 
-        verify(adapter).addLoadStateListener(listener)
+        argumentCaptor<(CombinedLoadStates) -> Unit> {
+            verify(adapter).addLoadStateListener(capture())
+        }.firstValue
     }
 }
