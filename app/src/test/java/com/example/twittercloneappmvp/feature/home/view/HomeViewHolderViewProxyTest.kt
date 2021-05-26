@@ -60,7 +60,7 @@ class HomeViewHolderViewProxyTest {
 
         viewProxy.setUserName(userName)
 
-        verify(userNameTv).text = userName
+        verify(userNameTv).text = "@$userName"
     }
 
     @Test
