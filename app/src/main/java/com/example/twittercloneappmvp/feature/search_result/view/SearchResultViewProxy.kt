@@ -6,8 +6,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R

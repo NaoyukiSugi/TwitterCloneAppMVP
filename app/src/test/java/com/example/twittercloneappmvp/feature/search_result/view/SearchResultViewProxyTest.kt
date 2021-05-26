@@ -140,4 +140,12 @@ internal class SearchResultViewProxyTest {
         verify(refreshListener).onRefresh()
     }
 
+    @Test
+    fun `addLoadStateListener should set listener into searchResultAdapter`() {
+        val listener: SearchResultContract.LoadStateListener = mock()
+
+        viewProxy.addLoadStateListener(listener)
+
+        verify(adapter).addLoadStateListener(listener)
+    }
 }
