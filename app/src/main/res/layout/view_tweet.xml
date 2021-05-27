@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/tweet_background">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon"
         android:layout_width="@dimen/tweet_icon_size"
         android:layout_height="@dimen/tweet_icon_size"

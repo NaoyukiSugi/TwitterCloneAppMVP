@@ -101,6 +101,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    // circleimageview
+    implementation "de.hdodenhof:circleimageview:$circle_image_view_version"
 
     implementation(project(":common_api"))
 }
