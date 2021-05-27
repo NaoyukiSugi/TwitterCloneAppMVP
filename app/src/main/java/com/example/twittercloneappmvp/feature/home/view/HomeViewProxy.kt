@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.feature.home.fragment.HomeFragmentDirections
@@ -36,6 +37,9 @@ class HomeViewProxy @Inject constructor(
 
     private val refreshButton: Button?
         get() = fragment.view?.findViewById(R.id.refresh_button)
+
+    private val swipeRefreshLayout: SwipeRefreshLayout?
+        get() = fragment.view?.findViewById(R.id.swipe_refresh_layout)
 
     private val progressBar: ContentLoadingProgressBar?
         get() = fragment.view?.findViewById(R.id.progress_bar)
@@ -96,6 +100,12 @@ class HomeViewProxy @Inject constructor(
 
     override fun setOnRefreshListener(listener: HomeContract.RefreshListener) {
         refreshButton?.setOnClickListener { listener.onRefresh() }
+        swipeRefreshLayout?.run {
+            setOnRefreshListener {
+                isRefreshing = false
+                listener.onRefresh()
+            }
+        }
     }
 
     override fun setOnQueryTextListener(listener: SearchView.OnQueryTextListener) {

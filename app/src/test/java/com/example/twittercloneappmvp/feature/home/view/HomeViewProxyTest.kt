@@ -8,6 +8,7 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.model.Tweet
@@ -24,6 +25,7 @@ internal class HomeViewProxyTest {
     private val progressBar: ContentLoadingProgressBar = mock()
     private val refreshButton: Button = mock()
     private val searchView: SearchView = mock()
+    private val swipeRefreshLayout: SwipeRefreshLayout = mock()
     private val view: View = mock {
         on { findViewById<RecyclerView>(R.id.recycler_view) } doReturn recyclerView
         on { findViewById<View>(R.id.error_view) } doReturn errorView
@@ -31,6 +33,7 @@ internal class HomeViewProxyTest {
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
         on { findViewById<SearchView>(R.id.search_view) } doReturn searchView
+        on { findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout) } doReturn swipeRefreshLayout
     }
     private val fragment: Fragment = mock {
         on { view } doReturn view
@@ -142,12 +145,18 @@ internal class HomeViewProxyTest {
 
         viewProxy.setOnRefreshListener(refreshListener)
 
-        val listener = argumentCaptor<View.OnClickListener>() {
+        val tapRefreshListener = argumentCaptor<View.OnClickListener> {
             verify(refreshButton).setOnClickListener(capture())
         }.firstValue
-        listener.onClick(refreshButton)
+        tapRefreshListener.onClick(refreshButton)
 
-        verify(refreshListener).onRefresh()
+        val swipeRefreshListener = argumentCaptor<SwipeRefreshLayout.OnRefreshListener> {
+            verify(swipeRefreshLayout).setOnRefreshListener(capture())
+        }.firstValue
+        swipeRefreshListener.onRefresh()
+
+        verify(refreshListener, times(2)).onRefresh()
+        verify(swipeRefreshLayout).isRefreshing = false
     }
 
     @Test
