@@ -57,7 +57,7 @@ class SearchResultPresenter @Inject constructor(
     }
 
     override fun onRefresh() {
-        TODO("Not yet implemented")
+        viewProxy.refresh()
     }
 
     override fun onLoadState(loadState: CombinedLoadStates) {

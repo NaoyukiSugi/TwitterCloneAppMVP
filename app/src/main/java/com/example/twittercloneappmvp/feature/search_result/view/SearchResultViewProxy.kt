@@ -11,6 +11,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.feature.search_result.fragment.SearchResultFragmentDirections
@@ -36,6 +37,9 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
 
     private val refreshButton: Button?
         get() = fragment.view?.findViewById(R.id.refresh_button)
+
+    private val swipeRefreshLayout: SwipeRefreshLayout?
+        get() = fragment.view?.findViewById(R.id.swipe_refresh_layout)
 
     private val progressBar: ContentLoadingProgressBar?
         get() = fragment.view?.findViewById(R.id.progress_bar)
@@ -93,6 +97,12 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
 
     override fun setOnRefreshListener(listener: SearchResultContract.RefreshListener) {
         refreshButton?.setOnClickListener { listener.onRefresh() }
+        swipeRefreshLayout?.run {
+            setOnRefreshListener {
+                isRefreshing = false
+                listener.onRefresh()
+            }
+        }
     }
 
     override fun addLoadStateListener(listener: SearchResultContract.LoadStateListener) {
@@ -105,6 +115,10 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
             .navigateSafe(
                 SearchResultFragmentDirections.actionSearchResultFragmentToProfileFragment(user)
             )
+    }
+
+    override fun refresh() {
+        searchResultAdapter.refresh()
     }
 
     @VisibleForTesting
