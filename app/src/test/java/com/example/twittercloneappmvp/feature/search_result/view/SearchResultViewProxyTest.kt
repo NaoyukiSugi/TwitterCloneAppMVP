@@ -9,6 +9,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
@@ -25,12 +26,14 @@ internal class SearchResultViewProxyTest {
     private val emptyView: View = mock()
     private val progressBar: ContentLoadingProgressBar = mock()
     private val refreshButton: Button = mock()
+    private val swipeRefreshLayout: SwipeRefreshLayout = mock()
     private val view: View = mock {
         on { findViewById<RecyclerView>(R.id.recycler_view) } doReturn recyclerView
         on { findViewById<View>(R.id.error_view) } doReturn errorView
         on { findViewById<View>(R.id.empty_view) } doReturn emptyView
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
+        on { findViewById<SwipeRefreshLayout>(R.id.swipe_refresh_layout) } doReturn swipeRefreshLayout
     }
     private val fragment: Fragment = mock { on { view } doReturn view }
     private val adapter: SearchResultAdapter = mock()
@@ -137,17 +140,23 @@ internal class SearchResultViewProxyTest {
     }
 
     @Test
-    fun `setOnRefreshListener should set listener into refreshButton`() {
+    fun `setOnRefreshListener should set listener into refreshButton and swipeRefreshLayout`() {
         val refreshListener: SearchResultContract.RefreshListener = mock()
 
         viewProxy.setOnRefreshListener(refreshListener)
 
-        val listener = argumentCaptor<View.OnClickListener>() {
+        val tapRefreshListener = argumentCaptor<View.OnClickListener> {
             verify(refreshButton).setOnClickListener(capture())
         }.firstValue
-        listener.onClick(refreshButton)
+        tapRefreshListener.onClick(refreshButton)
 
-        verify(refreshListener).onRefresh()
+        val swipeRefreshListener = argumentCaptor<SwipeRefreshLayout.OnRefreshListener> {
+            verify(swipeRefreshLayout).setOnRefreshListener(capture())
+        }.firstValue
+        swipeRefreshListener.onRefresh()
+
+        verify(refreshListener, times(2)).onRefresh()
+        verify(swipeRefreshLayout).isRefreshing = false
     }
 
     @Test

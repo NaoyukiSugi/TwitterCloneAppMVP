@@ -43,6 +43,7 @@ interface SearchResultContract {
         fun setOnRefreshListener(listener: RefreshListener)
         fun addLoadStateListener(listener: LoadStateListener)
         fun navigateToProfile(user: User)
+        fun refresh()
     }
 
     interface Presenter {
