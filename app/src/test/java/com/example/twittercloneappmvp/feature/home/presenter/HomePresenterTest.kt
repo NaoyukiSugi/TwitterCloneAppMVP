@@ -2,16 +2,18 @@ package com.example.twittercloneappmvp.feature.home.presenter
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.example.common_api.home_timeline.ResponseTweet
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
+import com.example.twittercloneappmvp.model.Future
 import com.example.twittercloneappmvp.model.Tweet
 import com.example.twittercloneappmvp.model.User
-import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -31,6 +33,11 @@ internal class HomePresenterTest {
     fun setUp() {
         Dispatchers.setMain(TestCoroutineDispatcher())
         presenter = spy(HomePresenter(viewProxy, repository, lifecycleOwner))
+    }
+
+    @AfterEach
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     // region onLifecycleEventOnStart
@@ -72,22 +79,15 @@ internal class HomePresenterTest {
 
     // region getHomeTimeline
     @Test
-    fun `getHomeTimeline should call showLoadingView`() {
-        presenter.getHomeTimeline()
-
-        verify(viewProxy).showLoadingView()
-    }
-
-    @Test
-    fun `getHomeTimeline should only show recyclerView and submit list when result data is not empty`() {
+    fun `getHomeTimeline should show only recyclerView and submit list when result data is not empty`() {
         runBlockingTest {
             val tweetList =
                 listOf(Tweet(id = 0L, createdAt = "createdAt", text = "text", user = mock()))
-            val mockResult = NetworkResult.Success(tweetList)
-            doReturn(mockResult).whenever(repository).getHomeTimeline()
+            doReturn(flowOf(Future.Success(tweetList))).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
 
+            verify(viewProxy).hideLoadingView()
             verify(viewProxy).hideErrorView()
             verify(viewProxy).hideEmptyView()
             verify(viewProxy).showRecyclerView()
@@ -96,41 +96,28 @@ internal class HomePresenterTest {
     }
 
     @Test
-    fun `getHomeTimeline should only show emptyView when result data is null`() {
+    fun `getHomeTimeline should show only emptyView when result data is empty`() {
         runBlockingTest {
-            val mockResult = NetworkResult.Success(null)
-            doReturn(mockResult).whenever(repository).getHomeTimeline()
+            val tweetList = emptyList<Tweet>()
+            doReturn(flowOf(Future.Success(tweetList))).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
 
-            verify(viewProxy).hideRecyclerView()
+            verify(viewProxy).hideLoadingView()
             verify(viewProxy).hideErrorView()
+            verify(viewProxy).hideRecyclerView()
             verify(viewProxy).showEmptyView()
         }
     }
 
     @Test
-    fun `getHomeTimeline should only show emptyView when result data is empty`() {
+    fun `getHomeTimeline should show only errorView when result is Error`() {
         runBlockingTest {
-            val mockResult = NetworkResult.Success(emptyList<ResponseTweet>())
-            doReturn(mockResult).whenever(repository).getHomeTimeline()
+            doReturn(flowOf(Future.Error(mock()))).whenever(repository).getHomeTimeline()
 
             presenter.getHomeTimeline()
 
-            verify(viewProxy).hideRecyclerView()
-            verify(viewProxy).hideErrorView()
-            verify(viewProxy).showEmptyView()
-        }
-    }
-
-    @Test
-    fun `getHomeTimeline should only show errorView when result is Error`() {
-        runBlockingTest {
-            val mockResult = NetworkResult.Error(message = "message", data = null)
-            doReturn(mockResult).whenever(repository).getHomeTimeline()
-
-            presenter.getHomeTimeline()
-
+            verify(viewProxy).hideLoadingView()
             verify(viewProxy).hideRecyclerView()
             verify(viewProxy).hideEmptyView()
             verify(viewProxy).showErrorView()
@@ -138,10 +125,17 @@ internal class HomePresenterTest {
     }
 
     @Test
-    fun `getHomeTimeline should call hideLoadingView`() {
-        presenter.getHomeTimeline()
+    fun `getHomeTimeline should show only showLoadingView when result is Proceding`() {
+        runBlockingTest {
+            doReturn(flowOf(Future.Proceeding)).whenever(repository).getHomeTimeline()
 
-        verify(viewProxy).hideLoadingView()
+            presenter.getHomeTimeline()
+
+            verify(viewProxy).showLoadingView()
+            verify(viewProxy).hideErrorView()
+            verify(viewProxy).hideEmptyView()
+            verify(viewProxy).hideRecyclerView()
+        }
     }
     // endregion
 

@@ -48,20 +48,14 @@ class HomePresenter @Inject constructor(
             repository.getHomeTimeline()
                 .collect {
                     when (it) {
-                        is Future.Proceeding -> {
-                            viewProxy.run {
-                                showLoadingView()
-                                hideErrorView()
-                                hideEmptyView()
-                                hideRecyclerView()
-                            }
-                        }
                         is Future.Success -> {
-                            viewProxy.hideLoadingView()
+                            viewProxy.run {
+                                hideLoadingView()
+                                hideErrorView()
+                            }
                             it.transform { tweets ->
                                 if (tweets.isNotEmpty()) {
                                     viewProxy.run {
-                                        hideErrorView()
                                         hideEmptyView()
                                         showRecyclerView()
                                         submitList(tweets)
@@ -69,7 +63,6 @@ class HomePresenter @Inject constructor(
                                 } else {
                                     viewProxy.run {
                                         hideRecyclerView()
-                                        hideErrorView()
                                         showEmptyView()
                                     }
                                 }
@@ -81,6 +74,14 @@ class HomePresenter @Inject constructor(
                                 hideRecyclerView()
                                 hideEmptyView()
                                 showErrorView()
+                            }
+                        }
+                        is Future.Proceeding -> {
+                            viewProxy.run {
+                                showLoadingView()
+                                hideErrorView()
+                                hideEmptyView()
+                                hideRecyclerView()
                             }
                         }
                     }

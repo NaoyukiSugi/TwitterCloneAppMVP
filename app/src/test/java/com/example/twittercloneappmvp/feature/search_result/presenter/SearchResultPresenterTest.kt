@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -32,6 +34,11 @@ internal class SearchResultPresenterTest {
     fun setUp() {
         Dispatchers.setMain(TestCoroutineDispatcher())
         presenter = spy(SearchResultPresenter(viewProxy, repository, lifecycleOwner))
+    }
+
+    @AfterEach
+    internal fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     // region onLifecycleEventOnStart
