@@ -7,13 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="tweet_background">#FF000000</color>
     <color name="tweet_name">#FFFFFFFF</color>
     <color name="tweet_user_name">#FF626B71</color>
     <color name="tweet_text">#FFFFFFFF</color>
     <color name="tweet_divider">#282c2e</color>
-    <color name="profile_background">#FF000000</color>
     <color name="profile_name">#FFFFFFFF</color>
     <color name="profile_user_name">#FF626B71</color>
     <color name="profile_description">#FFFFFFFF</color>
+    <color name="screen_background">#141d26</color>
 </resources>
