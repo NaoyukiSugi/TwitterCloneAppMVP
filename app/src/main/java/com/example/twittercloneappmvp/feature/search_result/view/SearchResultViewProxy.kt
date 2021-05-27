@@ -99,8 +99,8 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
     internal fun createSearchResultAdapter() = SearchResultAdapter()
 
     @VisibleForTesting
-    internal fun createItemDecoration(): RecyclerView.ItemDecoration =
-        DividerItemDecoration(fragment.context, LinearLayoutManager(fragment.context).orientation)
+    internal fun createItemDecoration() =
+        DividerItemDecoration(fragment.context, DividerItemDecoration.VERTICAL)
             .apply {
                 fragment.context?.getDrawable(R.drawable.divider)?.let { setDrawable(it) }
             }

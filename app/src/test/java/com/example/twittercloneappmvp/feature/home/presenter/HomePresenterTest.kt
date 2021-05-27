@@ -41,6 +41,13 @@ internal class HomePresenterTest {
     }
 
     @Test
+    fun `onLifecycleEventOnStart should call initRecyclerView`() {
+        presenter.onLifecycleEventOnStart()
+
+        verify(viewProxy).initRecyclerView()
+    }
+
+    @Test
     fun `onLifecycleEventOnStart should call setOnIconClickListener`() {
         presenter.onLifecycleEventOnStart()
 

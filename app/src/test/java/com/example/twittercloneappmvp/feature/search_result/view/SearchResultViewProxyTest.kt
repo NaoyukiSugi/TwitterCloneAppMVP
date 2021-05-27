@@ -1,7 +1,5 @@
 package com.example.twittercloneappmvp.feature.search_result.view
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import androidx.core.view.isVisible
@@ -9,6 +7,7 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.paging.CombinedLoadStates
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
@@ -33,14 +32,7 @@ internal class SearchResultViewProxyTest {
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
     }
-    private val drawable: Drawable = mock()
-    private val context: Context = mock {
-        on { getDrawable(R.drawable.divider) } doReturn drawable
-    }
-    private val fragment: Fragment = mock {
-        on { view } doReturn view
-        on { context } doReturn context
-    }
+    private val fragment: Fragment = mock { on { view } doReturn view }
     private val adapter: SearchResultAdapter = mock()
 
     @BeforeEach
@@ -58,9 +50,10 @@ internal class SearchResultViewProxyTest {
 
     @Test
     fun `initRecyclerView should call addItemDecoration`() {
-        viewProxy.initRecyclerView()
-        val itemDecoration: RecyclerView.ItemDecoration = mock()
+        val itemDecoration: DividerItemDecoration = mock()
         doReturn(itemDecoration).whenever(viewProxy).createItemDecoration()
+
+        viewProxy.initRecyclerView()
 
         verify(recyclerView).addItemDecoration(itemDecoration)
     }
