@@ -15,4 +15,6 @@
     <color name="profile_user_name">#FF626B71</color>
     <color name="profile_description">#FFFFFFFF</color>
     <color name="screen_background">#141d26</color>
+    <color name="search_icon">#7c8e9b</color>
+    <color name="search_view_background">#12171d</color>
 </resources>
