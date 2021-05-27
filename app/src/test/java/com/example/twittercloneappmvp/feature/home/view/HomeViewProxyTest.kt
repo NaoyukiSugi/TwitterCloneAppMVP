@@ -6,6 +6,7 @@ import android.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
@@ -47,6 +48,16 @@ internal class HomeViewProxyTest {
         viewProxy.initAdapter()
 
         verify(recyclerView).adapter = adapter
+    }
+
+    @Test
+    fun `initRecyclerView should call addItemDecoration`() {
+        val itemDecoration: DividerItemDecoration = mock()
+        doReturn(itemDecoration).whenever(viewProxy).createItemDecoration()
+
+        viewProxy.initRecyclerView()
+
+        verify(recyclerView).addItemDecoration(itemDecoration)
     }
 
     @Test

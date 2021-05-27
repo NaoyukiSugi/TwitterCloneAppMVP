@@ -34,6 +34,7 @@ class SearchResultPresenter @Inject constructor(
     fun onLifecycleEventOnStart() {
         viewProxy.run {
             initAdapter()
+            initRecyclerView()
             setOnIconClickListener(this@SearchResultPresenter)
             setOnRefreshListener(this@SearchResultPresenter)
             addLoadStateListener(this@SearchResultPresenter)

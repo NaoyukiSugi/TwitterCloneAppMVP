@@ -7,6 +7,7 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.paging.CombinedLoadStates
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
@@ -31,9 +32,7 @@ internal class SearchResultViewProxyTest {
         on { findViewById<ContentLoadingProgressBar>(R.id.progress_bar) } doReturn progressBar
         on { findViewById<Button>(R.id.refresh_button) } doReturn refreshButton
     }
-    private val fragment: Fragment = mock {
-        on { view } doReturn view
-    }
+    private val fragment: Fragment = mock { on { view } doReturn view }
     private val adapter: SearchResultAdapter = mock()
 
     @BeforeEach
@@ -47,6 +46,16 @@ internal class SearchResultViewProxyTest {
         viewProxy.initAdapter()
 
         verify(recyclerView).adapter = adapter
+    }
+
+    @Test
+    fun `initRecyclerView should call addItemDecoration`() {
+        val itemDecoration: DividerItemDecoration = mock()
+        doReturn(itemDecoration).whenever(viewProxy).createItemDecoration()
+
+        viewProxy.initRecyclerView()
+
+        verify(recyclerView).addItemDecoration(itemDecoration)
     }
 
     @Test

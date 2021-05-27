@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
@@ -47,6 +48,10 @@ class HomeViewProxy @Inject constructor(
             homeAdapter = this
             recyclerView?.adapter = this
         }
+    }
+
+    override fun initRecyclerView() {
+        recyclerView?.run { addItemDecoration(createItemDecoration()) }
     }
 
     override fun submitList(tweets: List<Tweet>) {
@@ -113,4 +118,11 @@ class HomeViewProxy @Inject constructor(
 
     @VisibleForTesting
     internal fun createHomeAdapter() = HomeAdapter()
+
+    @VisibleForTesting
+    internal fun createItemDecoration() =
+        DividerItemDecoration(fragment.context, DividerItemDecoration.VERTICAL)
+            .apply {
+                fragment.context?.getDrawable(R.drawable.divider)?.let { setDrawable(it) }
+            }
 }

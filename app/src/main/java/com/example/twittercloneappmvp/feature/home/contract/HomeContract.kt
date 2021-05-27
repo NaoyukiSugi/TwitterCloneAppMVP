@@ -13,6 +13,7 @@ interface HomeContract {
 
     interface ViewProxy {
         fun initAdapter()
+        fun initRecyclerView()
         fun submitList(tweets: List<Tweet>)
         fun showRecyclerView()
         fun hideRecyclerView()

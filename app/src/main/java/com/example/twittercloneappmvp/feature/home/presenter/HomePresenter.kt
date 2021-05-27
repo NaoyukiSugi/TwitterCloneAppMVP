@@ -33,6 +33,7 @@ class HomePresenter @Inject constructor(
     fun onLifecycleEventOnStart() {
         viewProxy.run {
             initAdapter()
+            initRecyclerView()
             setOnIconClickListener(this@HomePresenter)
             setOnRefreshListener(this@HomePresenter)
             setOnQueryTextListener(this@HomePresenter)
