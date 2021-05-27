@@ -7,6 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
 import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -84,6 +85,15 @@ internal class SearchResultPresenterTest {
                 verify(viewProxy).submitData(it)
             }
         }
+    }
+
+    @Test
+    fun `onIconClick should call navigateToProfile`() {
+        val user: User = mock()
+
+        presenter.onIconClick(user)
+
+        verify(viewProxy).navigateToProfile(user)
     }
 
     // region onLoadState

@@ -53,7 +53,7 @@ class SearchResultPresenter @Inject constructor(
     }
 
     override fun onIconClick(user: User) {
-        TODO("Not yet implemented")
+        viewProxy.navigateToProfile(user)
     }
 
     override fun onRefresh() {

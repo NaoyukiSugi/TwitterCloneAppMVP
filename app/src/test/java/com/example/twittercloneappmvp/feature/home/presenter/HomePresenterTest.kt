@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.common_api.home_timeline.ResponseTweet
 import com.example.twittercloneappmvp.feature.home.contract.HomeContract
 import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
 import com.example.twittercloneappmvp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
@@ -159,4 +160,14 @@ internal class HomePresenterTest {
         verify(presenter).getHomeTimeline()
     }
     // endregion
+
+    @Test
+    fun `onIconClick should call navigateToProfile`() {
+        val user: User = mock()
+
+        presenter.onIconClick(user)
+
+        verify(viewProxy).navigateToProfile(user)
+    }
+
 }

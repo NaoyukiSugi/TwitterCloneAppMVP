@@ -6,13 +6,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.twittercloneappmvp.R
 import com.example.twittercloneappmvp.feature.search_result.contract.SearchResultContract
+import com.example.twittercloneappmvp.feature.search_result.fragment.SearchResultFragmentDirections
 import com.example.twittercloneappmvp.model.Tweet
+import com.example.twittercloneappmvp.model.User
+import com.example.twittercloneappmvp.util.navigateSafe
 import javax.inject.Inject
 
 class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) :
@@ -93,6 +97,14 @@ class SearchResultViewProxy @Inject constructor(private val fragment: Fragment) 
 
     override fun addLoadStateListener(listener: SearchResultContract.LoadStateListener) {
         searchResultAdapter.addLoadStateListener { listener.onLoadState(it) }
+    }
+
+    override fun navigateToProfile(user: User) {
+        fragment
+            .findNavController()
+            .navigateSafe(
+                SearchResultFragmentDirections.actionSearchResultFragmentToProfileFragment(user)
+            )
     }
 
     @VisibleForTesting

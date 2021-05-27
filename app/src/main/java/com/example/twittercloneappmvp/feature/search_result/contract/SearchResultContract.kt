@@ -42,6 +42,7 @@ interface SearchResultContract {
         fun setOnIconClickListener(listener: IconClickListener)
         fun setOnRefreshListener(listener: RefreshListener)
         fun addLoadStateListener(listener: LoadStateListener)
+        fun navigateToProfile(user: User)
     }
 
     interface Presenter {
