@@ -4,4 +4,4 @@ import javax.inject.Qualifier
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class RetrofitForOldApi
+annotation class V1Retrofit
