@@ -14,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -46,7 +45,7 @@ class NetworkModule {
             .build()
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideSearchResultTimelineApi(@V2Retrofit retrofit: Retrofit): SearchResultTimelineApi =
         retrofit.create(SearchResultTimelineApi::class.java)
 

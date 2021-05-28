@@ -1,5 +1,7 @@
 package com.example.twittercloneappmvp.di.module
 
+import com.example.common_api.ServerConfig
+import com.example.common_api.TwitterServerConfig
 import com.example.twittercloneappmvp.BuildConfig
 import com.example.twittercloneappmvp.di.annotation.V2OkHttpClient
 import com.example.twittercloneappmvp.di.annotation.V1OkHttpClient
@@ -49,6 +51,12 @@ class ApiConfigModule {
             })
             .addInterceptor(httpLoggingInterceptor)
             .build()
+
+    @Provides
+    @Reusable
+    fun provideTwitterServerConfig(): ServerConfig {
+        return TwitterServerConfig()
+    }
 
     companion object {
         private const val HEADER_NAME = "Authorization"
