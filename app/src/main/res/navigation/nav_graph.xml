@@ -38,4 +38,9 @@
             android:id="@+id/action_searchResultFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.twittercloneappmvp.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
 </navigation>

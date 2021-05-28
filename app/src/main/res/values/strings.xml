@@ -4,4 +4,6 @@
     <string name="view_home_error_message">データを取得できませんでした</string>
     <string name="view_home_error_refresh_button">更新する</string>
     <string name="search_view_hint">キーワード検索</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
