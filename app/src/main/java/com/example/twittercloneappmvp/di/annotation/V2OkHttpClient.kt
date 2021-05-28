@@ -4,4 +4,4 @@ import javax.inject.Qualifier
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class LifecycleOwnerForHome
+annotation class V2OkHttpClient

@@ -4,4 +4,4 @@ import javax.inject.Qualifier
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class OkHttpClientForOldApi
+annotation class V2Retrofit

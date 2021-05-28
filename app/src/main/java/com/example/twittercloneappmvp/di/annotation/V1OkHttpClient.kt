@@ -4,4 +4,4 @@ import javax.inject.Qualifier
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class LifecycleOwnerForSearchResult
+annotation class V1OkHttpClient
